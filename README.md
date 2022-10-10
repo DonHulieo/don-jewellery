@@ -62,3 +62,7 @@ Config.VarHackSettings = {
     time = 20 -- time the hack displays for
 }
 ```
+
+# Store MLO's
+All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
+- [GigZ Jewel Store](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261)
