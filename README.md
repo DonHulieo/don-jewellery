@@ -3,6 +3,7 @@ Jewelery Store heist script with 3 stores for QBCore
 
 # Credits
 - [Holiday95](https://github.com/Holidayy95/qb-jewelery) For their fork of qb-jewelery which this is based on, and giving me the idea.
+- [QBCore Framework](https://github.com/qbcore-framework) For the orginal qb-jewelery and for inspiring me to code.
 
 # Dependencies
 - [qb-core](https://github.com/qbcore-framework/qb-core)
