@@ -20,7 +20,7 @@ Jewelery Store heist script with 3 stores for QBCore
 
 # Preview
 
--[Don Jewelery](https://youtu.be/t-MO9yvzlx4)
+- [Don Jewelery](https://youtu.be/t-MO9yvzlx4)
 
 # Store MLO's
 All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
