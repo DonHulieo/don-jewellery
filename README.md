@@ -12,7 +12,7 @@ Jewelery Store heist script with 3 stores for QBCore
 - [ps-ui](https://github.com/Project-Sloth/ps-ui)
 
 # New Features
-- Optimised! Runs at 0.1ms for the split second it unlocks the doors after the Varhack is complete
+- Optimised! Runs at 0~0.1ms.
 - 2 New stores to rob // Grapeseed & Paleto
 - Doors now lock depending of the time of day, and store is "unthievable" during opening hours.
 - Thermite the stores fusebox to open the front door at night.
