@@ -56,7 +56,7 @@ local function unlockAll() -- Unlocks all Vangelico's doors
             TriggerServerEvent('qb-doorlock:server:updateState', v.sec, false, false, false, true)
         end
     end
-    doorLocked = true
+    doorLocked = false
 end
 
 local function CheckRobberyTime()
