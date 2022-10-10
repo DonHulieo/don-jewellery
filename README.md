@@ -1,5 +1,5 @@
 # don-jewelery
-Jewelery Store heist script with 3 stores for QBCore
+Jewelery Robbery for QBCore with 3 stores, Thermite, VarHack and auto-lock/unlock doors!
 
 # Credits
 - [Holiday95](https://github.com/Holidayy95/qb-jewelery) For their fork of qb-jewelery which this is based on, and giving me the idea.
