@@ -18,6 +18,10 @@ Jewelery Store heist script with 3 stores for QBCore
 - Thermite the stores fusebox to open the front door at night.
 - Hack into Vinewood Vangelico's PC to unlock all Vangelico's for 5 minutes (or whatever you set the cooldown to).
 
+# Preview
+
+-[Don Jewelery](https://youtu.be/t-MO9yvzlx4)
+
 # Store MLO's
 All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
 - [GigZ Jewel Store](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261)
