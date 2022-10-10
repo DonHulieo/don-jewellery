@@ -12,12 +12,11 @@ Jewelery Store heist script with 3 stores for QBCore
 - [ps-ui](https://github.com/Project-Sloth/ps-ui)
 
 # New Features
-- Optimised! Runs at 0~0.1ms.
+- (Not really a "new" feature but) Optimised script, running at 0~0.1ms, only hitting 0.1ms when it locks or unlocks a door.
 - 2 New stores to rob // Grapeseed & Paleto
 - Doors now lock depending of the time of day, and store is "unthievable" during opening hours.
 - Thermite the stores fusebox to open the front door at night.
 - Hack into Vinewood Vangelico's PC to unlock all Vangelico's for 5 minutes (or whatever you set the cooldown to).
-- A cooldown for locking the doors again after the hacks.
 
 # Store MLO's
 All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
