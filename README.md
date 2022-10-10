@@ -67,4 +67,4 @@ Config.VarHackSettings = {
 # Store MLO's
 All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
 - [GigZ Jewel Store](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261)
-- Please note if you're using these MLO's you'll need to use my updated fxmanifest.lua and interiorproxies.meta in don-jewelery/gigz-jewel-fix/
+- If you're using these MLO's you'll need to use my updated fxmanifest.lua and interiorproxies.meta in don-jewelery/gigz-jewel-fix/
