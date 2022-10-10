@@ -12,7 +12,7 @@ Jewelery Store heist script with 3 stores for QBCore
 - [ps-ui](https://github.com/Project-Sloth/ps-ui)
 
 # New Features
-- (Not really a "new" feature but) Optimised script, running at 0~0.1ms, only hitting 0.1ms when it locks or unlocks a door.
+- (Not really a "new" feature but) Optimised script, running at 0~0.1ms, only hitting 0.1ms when it locks or unlocks a door after a hack.
 - 2 New stores to rob // Grapeseed & Paleto
 - Doors now lock depending of the time of day, and store is "unthievable" during opening hours.
 - Thermite the stores fusebox to open the front door at night.
