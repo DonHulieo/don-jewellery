@@ -25,9 +25,14 @@ local function loadAnimDict(dict)
     end
 end
 
-local function lockDoors(k) -- Locks Los Santos Vangelico's Main Door
+local function lockDoors(k) -- Locks Vangelico's front doors
     TriggerEvent('qb-doorlock:client:setState', source, Config.Doors[k].main, true, src, false, false)
     TriggerServerEvent('qb-doorlock:server:updateState', Config.Doors[k].main, true, false, false, true)
+end
+
+local function unlockDoors(k) -- Unocks Vangelico's front doors
+    TriggerEvent('qb-doorlock:client:setState', source, Config.Doors[k].main, false, src, false, false)
+    TriggerServerEvent('qb-doorlock:server:updateState', Config.Doors[k].main, false, false, false, true)
 end
 
 local function lockAll() -- Locks all Vangelico's doors
@@ -42,18 +47,13 @@ local function lockAll() -- Locks all Vangelico's doors
     doorLocked = true
 end
 
-local function unlockDoors(k) -- Unocks all Vangelico's front doors
-    TriggerEvent('qb-doorlock:client:setState', source, Config.Doors[k].main, false, src, false, false)
-    TriggerServerEvent('qb-doorlock:server:updateState', Config.Doors[k].main, false, false, false, true)
-end
-
 local function unlockAll() -- Unlocks all Vangelico's doors
     for k, v in pairs(Config.Doors) do
         TriggerEvent('qb-doorlock:client:setState', source, v.main, false, src, false, false)
         TriggerEvent('qb-doorlock:client:setState', source, v.sec, false, src, false, false)
         if doorHacked then
             TriggerServerEvent('qb-doorlock:server:updateState', v.main, false, false, false, true) 
-            TriggerServerEvent('qb-doorlock:server:updateState', v.sec, true, false, false, true)
+            TriggerServerEvent('qb-doorlock:server:updateState', v.sec, false, false, false, true)
         end
     end
     doorLocked = true
@@ -361,7 +361,7 @@ end)
 -- Threads
 
 CreateThread(function()
-    for k, v in pairs(Config.JewelleryLocation)
+    for k, v in pairs(Config.JewelleryLocation) do
         local Dealer = AddBlipForCoord(v.coords.x, v.coords.y, v.coords.z)
         SetBlipSprite (Dealer, 617)
         SetBlipDisplay(Dealer, 4)
@@ -371,6 +371,7 @@ CreateThread(function()
         BeginTextCommandSetBlipName("STRING")
         AddTextComponentSubstringPlayerName("Vangelico Jewellers")
         EndTextCommandSetBlipName(Dealer)
+    end
 end)
 
 CreateThread(function()
