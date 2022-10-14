@@ -23,6 +23,7 @@ Jewelery Robbery for QBCore with 3 stores, Thermite, VarHack and auto-lock/unloc
 # Preview
 
 - [Don Jewelery](https://youtu.be/t-MO9yvzlx4)
+- [Cases](https://streamable.com/5xcg40)
 
 # Store MLO's
 All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
