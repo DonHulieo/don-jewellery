@@ -89,40 +89,40 @@ Config.Hacks = {
 
 Config.WhitelistedWeapons = {
     [`weapon_assaultrifle`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_carbinerifle`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_pumpshotgun`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_sawnoffshotgun`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_compactrifle`] = {
-        ["timeOut"] = 10000
-    },
-    [`weapon_microsmg`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_autoshotgun`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_pistol`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_pistol_mk2`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_combatpistol`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_appistol`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
     },
     [`weapon_pistol50`] = {
-        ["timeOut"] = 10000
+        ["timeOut"] = 5000
+    },
+    [`weapon_microsmg`] = {
+        ["timeOut"] = 5000
     },
 }
 
@@ -155,181 +155,225 @@ Config.Locations = {
         ["coords"] = vector3(-626.83, -235.35, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [2] = {
         ["coords"] = vector3(-625.81, -234.7, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab4_start`,
+        ["PropEnd"] = `des_jewel_cab4_end`,
     },
     [3] = {
         ["coords"] = vector3(-626.95, -233.14, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab_start`,
+        ["PropEnd"] = `des_jewel_cab_end`,
     },
     [4] = {
         ["coords"] = vector3(-628.0, -233.86, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab_start`,
+        ["PropEnd"] = `des_jewel_cab_end`,
     },
     [5] = {
         ["coords"] = vector3(-625.7, -237.8, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [6] = {
         ["coords"] = vector3(-626.7, -238.58, 38.05),
-      ["isOpened"] = false,
+        ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab2_start`,
+        ["PropEnd"] = `des_jewel_cab2_end`,
     },
     [7] = {
         ["coords"] = vector3(-624.55, -231.06, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab4_start`,
+        ["PropEnd"] = `des_jewel_cab4_end`,
     },
     [8] = {
         ["coords"] = vector3(-623.13, -232.94, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab_start`,
+        ["PropEnd"] = `des_jewel_cab_end`,
     },
     [9] = {
         ["coords"] = vector3(-620.29, -234.44, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab_start`,
+        ["PropEnd"] = `des_jewel_cab_end`,
     },
     [10] = {
         ["coords"] = vector3(-619.15, -233.66, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [11] = {
         ["coords"] = vector3(-620.19, -233.44, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab4_start`,
+        ["PropEnd"] = `des_jewel_cab4_end`,
     },
     [12] = {
         ["coords"] = vector3(-617.63, -230.58, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab2_start`,
+        ["PropEnd"] = `des_jewel_cab2_end`,
     },
     [13] = {
         ["coords"] = vector3(-618.33, -229.55, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [14] = {
         ["coords"] = vector3(-619.7, -230.33, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab_start`,
+        ["PropEnd"] = `des_jewel_cab_end`,
     },
     [15] = {
         ["coords"] = vector3(-620.95, -228.6, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [16] = {
         ["coords"] = vector3(-619.79, -227.6, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab2_start`,
+        ["PropEnd"] = `des_jewel_cab2_end`,
     },
     [17] = {
         ["coords"] = vector3(-620.42, -226.6, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab_start`,
+        ["PropEnd"] = `des_jewel_cab_end`,
     },
     [18] = {
         ["coords"] = vector3(-623.94, -227.18, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab4_start`,
+        ["PropEnd"] = `des_jewel_cab4_end`,
     },
     [19] = {
         ["coords"] = vector3(-624.91, -227.87, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [20] = {
         ["coords"] = vector3(-623.94, -228.05, 38.05),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab2_start`,
+        ["PropEnd"] = `des_jewel_cab2_end`,
     },
     [21] = {
-        ["coords"] = vector3(1650.06, 4885.96, 41.66),
+        ["coords"] = vector3(1646.35, 4879.66, 41.74),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab4_start`,
+        ["PropEnd"] = `des_jewel_cab4_end`,
     },
     [22] = {
-        ["coords"] = vector3(1648.81, 4885.74, 41.66),
+        ["coords"] = vector3(1647.6, 4881.69, 41.75),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [23] = {
-        ["coords"] = vector3(1646.31, 4884.01, 41.66),
+        ["coords"] = vector3(1648.79, 4882.52, 41.75),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab_start`,
+        ["PropEnd"] = `des_jewel_cab_end`,
     },
     [24] = {
-        ["coords"] = vector3(1647.37, 4882.94, 41.66),
+        ["coords"] = vector3(1647.5, 4882.33, 41.75),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab2_start`,
+        ["PropEnd"] = `des_jewel_cab2_end`,
     },
     [25] = {
-        ["coords"] = vector3(1648.68, 4883.08, 41.66),
+        ["coords"] = vector3(1648.66, 4886.42, 41.75),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [26] = {
-        ["coords"] = vector3(1648.98, 4881.3, 41.66),
+        ["coords"] = vector3(1649.94, 4886.6, 41.75),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [27] = {
-        ["coords"] = vector3(1647.66, 4881.12, 41.66),
+        ["coords"] = vector3(-379.13, 6049.96, 31.09),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab4_start`,
+        ["PropEnd"] = `des_jewel_cab4_end`,
     },
     [28] = {
-        ["coords"] = vector3(1646.92, 4879.76, 41.66),
+        ["coords"] = vector3(-378.91, 6047.59, 31.1),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [29] = {
-        ["coords"] = vector3(-378.25, 6042.66, 31.51),
+        ["coords"] = vector3(-379.37, 6046.21, 31.1),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab_start`,
+        ["PropEnd"] = `des_jewel_cab_end`,
     },
     [30] = {
-        ["coords"] = vector3(-377.36, 6043.55, 31.51),
+        ["coords"] = vector3(-378.45, 6047.13, 31.1),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab2_start`,
+        ["PropEnd"] = `des_jewel_cab2_end`,
     },
     [31] = {
-        ["coords"] = vector3(-376.51, 6046.51, 31.51),
+        ["coords"] = vector3(-376.94, 6043.16, 31.1),
         ["isOpened"] = false,
         ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     },
     [32] = {
-        ["coords"] = vector3(-378.04, 6046.66, 31.51),
+        ["coords"] = vector3(-377.85, 6042.25, 31.1),
         ["isOpened"] = false,
         ["isBusy"] = false,
-    },
-    [33] = {
-        ["coords"] = vector3(-378.93, 6045.81, 31.51),
-        ["isOpened"] = false,
-        ["isBusy"] = false,
-    },
-    [34] = {
-        ["coords"] = vector3(-380.25, 6047.12, 31.51),
-        ["isOpened"] = false,
-        ["isBusy"] = false,
-    },
-    [35] = {
-        ["coords"] = vector3(-379.34, 6048.01, 31.51),
-        ["isOpened"] = false,
-        ["isBusy"] = false,
-    },
-    [36] = {
-        ["coords"] = vector3(-379.55, 6049.53, 31.51),
-        ["isOpened"] = false,
-        ["isBusy"] = false,
+        ["PropStart"] = `des_jewel_cab3_start`,
+        ["PropEnd"] = `des_jewel_cab3_end`,
     }
 }
 
