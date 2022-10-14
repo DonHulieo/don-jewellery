@@ -17,21 +17,6 @@ QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, 
     cb(amount)
 end)
 
-QBCore.Functions.CreateCallback('qb-jewellery:server:GetItemsNeeded', function(source, cb, item)
-    local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    if Player ~= nil then 
-        local Themite = Player.Functions.GetItemByName(item)
-        if Themite ~= nil then
-            cb(true)
-        else
-            cb(false)
-        end
-    else
-        cb(false)
-    end
-end)
-
 QBCore.Functions.CreateCallback('qb-jewellery:server:getVitrineState', function(_, cb)
 	cb(Config.Locations)
 end)
