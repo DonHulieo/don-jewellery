@@ -4,6 +4,7 @@ Jewelery Robbery for QBCore with 3 stores, Thermite, VarHack and auto-lock/unloc
 # Credits
 - [Holiday95](https://github.com/Holidayy95/qb-jewelery) For their fork of qb-jewelery which this is based on, and giving me the idea.
 - [QBCore Framework](https://github.com/qbcore-framework) For the orginal qb-jewelery and for inspiring me to code.
+- [MrNewb](https://github.com/MrNewb) For showing me how to get the cases to break, absolute legend!
 
 # Dependencies
 - [qb-core](https://github.com/qbcore-framework/qb-core)
@@ -15,6 +16,7 @@ Jewelery Robbery for QBCore with 3 stores, Thermite, VarHack and auto-lock/unloc
 - (Not really a "new" feature but) Optimised script, running at 0~0.1ms, only hitting 0.1ms when it locks or unlocks a door after a hack.
 - 2 New stores to rob // Grapeseed & Paleto
 - Doors now lock depending of the time of day, and store is "unthievable" during opening hours.
+- Cases will actually smash after you hit them, and reset after cooldown.
 - Thermite the stores fusebox to open the front door at night.
 - Hack into Vinewood Vangelico's PC to unlock all Vangelico's for 5 minutes (or whatever you set the cooldown to).
 
