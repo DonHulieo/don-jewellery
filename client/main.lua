@@ -160,7 +160,7 @@ local function smashVitrine(k)
                         TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
                         loadParticle()
                         StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
-                        Wait(2500)
+                        Wait(5500)
                     end
                 end)
             else
@@ -185,66 +185,64 @@ local function thermiteHack(k)
                 local coords = GetEntityCoords(ped)
                 local Dist = #(coords - Config.Thermite[k].coords)
                 if Dist <= 1.5 then
-                    QBCore.Functions.TriggerCallback('qb-jewellery:server:GetItemsNeeded', function(hasItem)
-                        if hasItem then
-                            if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
-                                TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
-                            elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
-                                TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
-                                QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
-                            end
-                            SetEntityHeading(ped, Config.Thermite[k].h)
-                            exports['ps-ui']:Thermite(function(success) -- success
-                                if success then    
-                                    QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
-                                    local loc = Config.Thermite[k].anim
-                                    local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(ped)))
-                                    local bagscene = NetworkCreateSynchronisedScene(loc.x, loc.y, loc.z, rotx, roty, rotz, 2, false, false, 1065353216, 0, 1.3)
-                                    local bag = CreateObject(GetHashKey('hei_p_m_bag_var22_arm_s'), loc.x, loc.y, loc.z,  true,  true, false)
-                                    SetEntityCollision(bag, false, true)
-                                    NetworkAddPedToSynchronisedScene(ped, bagscene, 'anim@heists@ornate_bank@thermal_charge', 'thermal_charge', 1.5, -4.0, 1, 16, 1148846080, 0)
-                                    NetworkAddEntityToSynchronisedScene(bag, bagscene, 'anim@heists@ornate_bank@thermal_charge', 'bag_thermal_charge', 4.0, -8.0, 1)
-                                    NetworkStartSynchronisedScene(bagscene)
-                                    Wait(1500)
-                                    local x, y, z = table.unpack(GetEntityCoords(ped))
-                                    local thermal_charge = CreateObject(GetHashKey('hei_prop_heist_thermite'), x, y, z + 0.2,  true,  true, true)
-                                
-                                    SetEntityCollision(thermal_charge, false, true)
-                                    AttachEntityToEntity(thermal_charge, ped, GetPedBoneIndex(ped, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-                                    Wait(4000)
-                                    TriggerServerEvent('qb-jewellery:server:RemoveDoorItem')
-                                
-                                    DetachEntity(thermal_charge, 1, 1)
-                                    FreezeEntityPosition(thermal_charge, true)
-                                    Wait(100)
-                                    DeleteObject(bag)
-                                    ClearPedTasks(ped)
-                                
-                                    Wait(100)
-                                    RequestNamedPtfxAsset('scr_ornate_heist')
-                                    while not HasNamedPtfxAssetLoaded('scr_ornate_heist') do
-                                        Wait(1)
-                                    end
-                                    
-                                    local termcoords = GetEntityCoords(thermal_charge)
-                                    ptfx = vector3(termcoords.x, termcoords.y + 1.0, termcoords.z)
-
-                                    SetPtfxAssetNextCall('scr_ornate_heist')
-                                    local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', ptfx, 0, 0, 0, 0x3F800000, 0, 0, 0, 0)
-                                    Wait(3000)
-                                    StopParticleFxLooped(effect, 0)
-                                    storeHit = true
-                                    DeleteObject(thermal_charge)
-                                    TriggerEvent('qb-jewellery:client:HackSuccess', k)
-                                else
-                                    QBCore.Functions.Notify("You Failure!", 'error', 4500)
-                                    storeHit = false
-                                end
-                            end, Config.ThermiteSettings.time, Config.ThermiteSettings.gridsize, Config.ThermiteSettings.incorrectBlocks)
-                        else
-                            QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                    if QBCore.Functions.HasItem("thermite") then
+                        if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
+                            TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
+                        elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
+                            TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
+                            QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
                         end
-                    end, "thermite")
+                        SetEntityHeading(ped, Config.Thermite[k].h)
+                        exports['ps-ui']:Thermite(function(success) -- success
+                            if success then    
+                                QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
+                                local loc = Config.Thermite[k].anim
+                                local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(ped)))
+                                local bagscene = NetworkCreateSynchronisedScene(loc.x, loc.y, loc.z, rotx, roty, rotz, 2, false, false, 1065353216, 0, 1.3)
+                                local bag = CreateObject(GetHashKey('hei_p_m_bag_var22_arm_s'), loc.x, loc.y, loc.z,  true,  true, false)
+                                SetEntityCollision(bag, false, true)
+                                NetworkAddPedToSynchronisedScene(ped, bagscene, 'anim@heists@ornate_bank@thermal_charge', 'thermal_charge', 1.5, -4.0, 1, 16, 1148846080, 0)
+                                NetworkAddEntityToSynchronisedScene(bag, bagscene, 'anim@heists@ornate_bank@thermal_charge', 'bag_thermal_charge', 4.0, -8.0, 1)
+                                NetworkStartSynchronisedScene(bagscene)
+                                Wait(1500)
+                                local x, y, z = table.unpack(GetEntityCoords(ped))
+                                local thermal_charge = CreateObject(GetHashKey('hei_prop_heist_thermite'), x, y, z + 0.2,  true,  true, true)
+                            
+                                SetEntityCollision(thermal_charge, false, true)
+                                AttachEntityToEntity(thermal_charge, ped, GetPedBoneIndex(ped, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
+                                Wait(4000)
+                                TriggerServerEvent('qb-jewellery:server:RemoveDoorItem')
+                            
+                                DetachEntity(thermal_charge, 1, 1)
+                                FreezeEntityPosition(thermal_charge, true)
+                                Wait(100)
+                                DeleteObject(bag)
+                                ClearPedTasks(ped)
+                            
+                                Wait(100)
+                                RequestNamedPtfxAsset('scr_ornate_heist')
+                                while not HasNamedPtfxAssetLoaded('scr_ornate_heist') do
+                                    Wait(1)
+                                end
+                                
+                                local termcoords = GetEntityCoords(thermal_charge)
+                                ptfx = vector3(termcoords.x, termcoords.y + 1.0, termcoords.z)
+
+                                SetPtfxAssetNextCall('scr_ornate_heist')
+                                local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', ptfx, 0, 0, 0, 0x3F800000, 0, 0, 0, 0)
+                                Wait(3000)
+                                StopParticleFxLooped(effect, 0)
+                                storeHit = true
+                                DeleteObject(thermal_charge)
+                                TriggerEvent('qb-jewellery:client:HackSuccess', k)
+                            else
+                                QBCore.Functions.Notify("You Failure!", 'error', 4500)
+                                storeHit = false
+                            end
+                        end, Config.ThermiteSettings.time, Config.ThermiteSettings.gridsize, Config.ThermiteSettings.incorrectBlocks)
+                    else
+                        QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                    end
                 else
                     QBCore.Functions.Notify("You just can't quite reach..", 'error')
                 end
@@ -285,32 +283,30 @@ local function securityHack()
                 for k, v in pairs(Config.Hacks) do
                     local Dist = #(coords - v.coords)
                     if Dist <= 1.5 then
-                        QBCore.Functions.TriggerCallback('qb-jewellery:server:GetItemsNeeded', function(hasItem)
-                            if hasItem then
-                                startHack()
-                                QBCore.Functions.Notify("connecting to security system...", 'success', 2500)
-                                --[[if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
-                                    TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
-                                elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
-                                    TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
-                                end]]
-                                Wait(2500)
-                                exports['ps-ui']:VarHack(function(success)
-                                    if success then
-                                        stopHack()
-                                        doorHacked = true
-                                        TriggerEvent('qb-jewellery:client:HackSuccess')
-                                    else
-                                        QBCore.Functions.Notify("I'll have to try that again..", 'error', 3500)
-                                        stopHack()
-                                        FreezeEntityPosition(ped, false)
-                                        doorHacked = false
-                                    end
-                                end, Config.VarHackSettings.blocks, Config.VarHackSettings.time)
-                            else
-                                QBCore.Functions.Notify("You don't have the correct items!", 'error')
-                            end
-                        end, "phone")
+                        if QBCore.Functions.HasItem("phone") then
+                            startHack()
+                            QBCore.Functions.Notify("connecting to security system...", 'success', 2500)
+                            --[[if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
+                                TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
+                            elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
+                                TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
+                            end]]
+                            Wait(2500)
+                            exports['ps-ui']:VarHack(function(success)
+                                if success then
+                                    stopHack()
+                                    doorHacked = true
+                                    TriggerEvent('qb-jewellery:client:HackSuccess')
+                                else
+                                    QBCore.Functions.Notify("I'll have to try that again..", 'error', 3500)
+                                    stopHack()
+                                    FreezeEntityPosition(ped, false)
+                                    doorHacked = false
+                                end
+                            end, Config.VarHackSettings.blocks, Config.VarHackSettings.time)
+                        else
+                            QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                        end
                     else
                         QBCore.Functions.Notify("You just can't quite reach..", 'error')
                     end
@@ -334,6 +330,13 @@ end)
 
 RegisterNetEvent('qb-jewellery:client:setVitrineState', function(stateType, state, k)
     Config.Locations[k][stateType] = state
+    if stateType == 'isBusy' and state == true then
+        CreateModelSwap(Config.Locations[k]["coords"].x, Config.Locations[k]["coords"].y, Config.Locations[k]["coords"].z, 0.1, Config.Locations[k]['PropStart'], Config.Locations[k]['PropEnd'], false)
+    end
+
+    if stateType == 'isOpened' and state == false then
+        RemoveModelSwap(Config.Locations[k]["coords"].x, Config.Locations[k]["coords"].y, Config.Locations[k]["coords"].z, 0.1, Config.Locations[k]['PropStart'], Config.Locations[k]['PropEnd'], false)
+    end
 end)
 
 RegisterNetEvent('qb-jewellery:client:HackSuccess', function(k)
