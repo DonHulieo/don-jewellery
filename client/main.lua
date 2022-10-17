@@ -399,37 +399,35 @@ end)
 
 CreateThread(function()
     for k, v in pairs(Config.Locations) do
-	if v.isOpened then
-		exports["qb-target"]:AddBoxZone("jewelstore" .. k, v.coords, 1, 1, {
-		    name = "jewelstore" .. k,
-		    heading = 40,
-		    minZ = v.coords.z - 1,
-		    maxZ = v.coords.z + 1,
-		    debugPoly = false
-		}, {
-		    options = {
-			{
-			    type = "client",
-			    icon = "fa fa-hand",
-			    label = Lang:t('general.target_label'),
-			    action = function()
-				if validWeapon() then
-				    smashVitrine(k)
-				else
-				    QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
-				end
-			    end,
-			    canInteract = function()
-				if v["isOpened"] or v["isBusy"] then
-				    return false
-				end
-				return true
-			    end,
-			}
-		    },
-		    distance = 1.5
-		})
-	end
+	exports["qb-target"]:AddBoxZone("jewelstore" .. k, v.coords, 1, 1, {
+	    name = "jewelstore" .. k,
+	    heading = 40,
+	    minZ = v.coords.z - 1,
+	    maxZ = v.coords.z + 1,
+	    debugPoly = false
+	}, {
+	    options = {
+		{
+		    type = "client",
+		    icon = "fa fa-hand",
+		    label = Lang:t('general.target_label'),
+		    action = function()
+			if validWeapon() then
+			    smashVitrine(k)
+			else
+			    QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
+			end
+		    end,
+		    canInteract = function()
+			if v["isOpened"] or v["isBusy"] then
+			    return false
+			end
+			return true
+		    end,
+		}
+	    },
+	    distance = 1.5
+	})
     end
 end)
 
