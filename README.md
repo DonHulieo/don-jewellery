@@ -28,6 +28,7 @@ Jewelery Robbery for QBCore with 3 stores, Thermite, VarHack and auto-lock/unloc
 # Store MLO's
 All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
 - [GigZ Jewel Store](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261)
+- **MAKE SURE TO INSTALL THE HEIST VERSION**
 - If you're using these MLO's you'll need to use my updated fxmanifest.lua and interiorproxies.meta in don-jewelery/gigz-jewel-fix/
 
 # Important Config
