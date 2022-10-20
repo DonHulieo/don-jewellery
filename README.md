@@ -72,7 +72,7 @@ Config.VarHackSettings = {
 }
 ```
 # Add to qb-doorlock/configs/ 
-## (As a new .lua file inside the configs folder)
+**(As a new .lua file inside the configs folder)**
 ```
 Config.DoorList['jewelery-citymain'] = {
     doorType = 'double',
