@@ -123,47 +123,51 @@ local function smashVitrine(k)
         if not CheckRobberyTime() then
             if not Config.Locations[k]["isOpened"] then
                 if cops >= Config.RequiredCops then
-                    local animDict = "missheist_jewel"
-                    local animName = "smash_case"
-                    local ped = PlayerPedId()
-                    local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.6, 0)
-                    local pedWeapon = GetSelectedPedWeapon(ped)
-                    if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
-                        TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
-                    elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
-                        TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
-                        QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
-                    end
-                    smashing = true
-                    QBCore.Functions.Progressbar("smash_vitrine", Lang:t('info.progressbar'), Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
-                        disableMovement = true,
-                        disableCarMovement = true,
-                        disableMouse = false,
-                        disableCombat = true,
-                    }, {}, {}, {}, function() -- Done
-                        TriggerServerEvent('qb-jewellery:server:vitrineReward', k)
-                        TriggerServerEvent('qb-jewellery:server:setTimeout')
-                        TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
-                        smashing = false
-                        TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
-                    end, function() -- Cancel
-                        TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
-                        smashing = false
-                        TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
-                    end)
-                    TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", true, k)
-
-                    CreateThread(function()
-                        while smashing do
-                            loadAnimDict(animDict)
-                            TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
-                            Wait(500)
-                            TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
-                            loadParticle()
-                            StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
-                            Wait(5500)
+                    if storeHit or doorHacked then
+                        local animDict = "missheist_jewel"
+                        local animName = "smash_case"
+                        local ped = PlayerPedId()
+                        local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.6, 0)
+                        local pedWeapon = GetSelectedPedWeapon(ped)
+                        if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
+                            TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
+                        elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
+                            TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
+                            QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
                         end
-                    end)
+                        smashing = true
+                        QBCore.Functions.Progressbar("smash_vitrine", Lang:t('info.progressbar'), Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
+                            disableMovement = true,
+                            disableCarMovement = true,
+                            disableMouse = false,
+                            disableCombat = true,
+                        }, {}, {}, {}, function() -- Done
+                            TriggerServerEvent('qb-jewellery:server:vitrineReward', k)
+                            TriggerServerEvent('qb-jewellery:server:setTimeout')
+                            TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
+                            smashing = false
+                            TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
+                        end, function() -- Cancel
+                            TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
+                            smashing = false
+                            TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
+                        end)
+                        TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", true, k)
+
+                        CreateThread(function()
+                            while smashing do
+                                loadAnimDict(animDict)
+                                TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
+                                Wait(500)
+                                TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
+                                loadParticle()
+                                StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+                                Wait(5500)
+                            end
+                        end)
+                    else
+                        QBCore.Functions.Notify('Looks like the stores security is still active..', 'error')
+                    end
                 else
                     QBCore.Functions.Notify(Lang:t('error.minimum_police', {value = Config.RequiredCops}), 'error')
                 end
