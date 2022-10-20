@@ -71,7 +71,7 @@ Config.VarHackSettings = {
     time = 20 -- time the hack displays for
 }
 ```
-# Add to qb-doorlock/Configs/
+# Add to qb-doorlock/configs/ (As a new .lua file inside the configs folder)
 ```
 Config.DoorList['jewelery-citymain'] = {
     doorType = 'double',
