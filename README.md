@@ -38,7 +38,7 @@ All store locations are for GigZ Jewelers' except for the base GTA one. It's a f
 - [GigZ Jewel Store](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261)
 - **MAKE SURE TO INSTALL THE HEIST VERSION**
 - If you're using these MLO's you'll need to use my updated fxmanifest.lua and interiorproxies.meta in don-jewelery/gigz-jewel-fix/
-- You'll also need to add the following code to qb-policejob/config.lua in Config.SecurityCameras after line 100 or index 34 (Vangelico's Jewelers CAM#4);
+- You'll also need to add the following code to qb-policejob/config.lua in Config.SecurityCameras after line 100 or after index 34 (Vangelico's Jewelers CAM#4);
 ```
 [35] = {label = "Vangelico's Grapeseed CAM#1", coords = vector3(1645.27, 4886.01, 44.7), r = {x = -35.0, y = 0.0, z = -141.82}, canRotate = true, isOnline = true},
 [36] = {label = "Vangelico's Paleto CAM#1", coords = vector3(-374.46, 6045.52, 34.05), r = {x = -35.0, y = 0.0, z = -105.09}, canRotate = true, isOnline = true},
