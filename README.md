@@ -13,8 +13,8 @@ Jewelery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock/
 - [qb-policejob](https://github.com/qbcore-framework/qb-policejob)
 - [ps-ui](https://github.com/Project-Sloth/ps-ui)
 
-- *Optional Dependancies;*
-    [ps-dispatch](https://github.com/Project-Sloth/ps-dispatch)
+## *Optional Dependancies;*
+- [ps-dispatch](https://github.com/Project-Sloth/ps-dispatch)
 
 # New Features
 - (Not really a "new" feature but) Optimised script, running at 0~0.1ms, only hitting 0.1ms when it locks or unlocks a door after a hack. 
