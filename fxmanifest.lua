@@ -1,8 +1,9 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'Don\'s QB-Jewelry'
-version '1.1.1'
+author 'DonHulieo'
+description 'Jewelery Store Heist for QBCore'
+version '1.1.3'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',

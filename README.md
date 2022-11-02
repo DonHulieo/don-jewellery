@@ -13,8 +13,9 @@ Jewelery Robbery for QBCore with 3 stores, Thermite, VarHack and auto-lock/unloc
 - [ps-ui](https://github.com/Project-Sloth/ps-ui)
 
 # New Features
-- (Not really a "new" feature but) Optimised script, running at 0~0.1ms, only hitting 0.1ms when it locks or unlocks a door after a hack.
+- (Not really a "new" feature but) Optimised script, running at 0~0.1ms, only hitting 0.1ms when it locks or unlocks a door after a hack. 
 - 2 New stores to rob // Grapeseed & Paleto
+- Config option for just the base GTA Vengelico Jewellers or all 3
 - Doors now lock depending of the time of day, and store is "unthievable" during opening hours.
 - Cases will actually smash after you hit them, and reset after cooldown.
 - Thermite the stores fusebox to open the front door at night.
@@ -39,6 +40,8 @@ Config.VangelicoHours = { -- Store Hours
         close = 17 -- When they lock for the night (for some reason this is actually 6pm)
     }
 } 
+
+Config.OneStore = false -- Set to true if using just the main Vangelico's Jewellers
 
 Config.Cooldown = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For door auto lock function
 Config.Timeout = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For case smashing cooldown

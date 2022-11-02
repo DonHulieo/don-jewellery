@@ -7,6 +7,8 @@ Config.VangelicoHours = { -- Store Hours
     }
 } 
 
+Config.OneStore = false -- Set to true if using just the main Vangelico's Jewellers
+
 Config.Cooldown = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For door auto lock function
 Config.Timeout = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For case smashing cooldown
 Config.RequiredCops = 0
@@ -106,6 +108,9 @@ Config.WhitelistedWeapons = {
     [`weapon_autoshotgun`] = {
         ["timeOut"] = 5000
     },
+    [`weapon_crowbar`] = {
+        ["timeOut"] = 5000
+    },
     [`weapon_pistol`] = {
         ["timeOut"] = 5000
     },
@@ -120,7 +125,7 @@ Config.WhitelistedWeapons = {
     },
     [`weapon_pistol50`] = {
         ["timeOut"] = 5000
-    },
+    }, 
     [`weapon_microsmg`] = {
         ["timeOut"] = 5000
     },
