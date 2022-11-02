@@ -32,6 +32,15 @@ All store locations are for GigZ Jewelers' except for the base GTA one. It's a f
 - **MAKE SURE TO INSTALL THE HEIST VERSION**
 - If you're using these MLO's you'll need to use my updated fxmanifest.lua and interiorproxies.meta in don-jewelery/gigz-jewel-fix/
 
+If you're using the config option for one store, and don't plan to use all three;
+- Don't install the store MLO's or the gigz-jewel-fix to your server.
+- Don't add the door locks for Grapeseed or Paleto to the qb-doorlocks configs file.
+- Set Config.OneStore = true.
+```
+# Please Note
+    - The hack functionality is removed for the one store version, and a timer is in it's place to help robbers get out before the doors lock.
+```
+
 # Important Config
 ```
 Config.VangelicoHours = { -- Store Hours
