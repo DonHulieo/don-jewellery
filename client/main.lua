@@ -350,9 +350,19 @@ end)
 RegisterNetEvent('qb-jewellery:client:HackSuccess', function(k)
     if storeHit or doorHacked then
         if storeHit  and not doorHacked then
-            QBCore.Functions.Notify("Fuses blown! Should be opening soon..", 'success')
-            unlockDoors(k)
-            Wait(Config.Cooldown)
+            if not Config.OneStore then
+                QBCore.Functions.Notify("Fuses blown! Should be opening soon..", 'success')
+                unlockDoors(k)
+                Wait(Config.Cooldown)
+            else
+                local warningTimer = 1 * (60 * 2000)
+                local warningTime = warningTimer / (60 * 2000)
+                local cooldownTime = Config.Cooldown / (60 * 2000)
+                QBCore.Functions.Notify("Fuses blown! The doors should be open for".. cooldownTime .. "minutes..", 'success')
+                unlockDoors(k)
+                Wait(Config.Cooldown - warningTimer)
+                QBCore.Functions.Notify("Hurry Up! The doors will be auto locking in".. warningTime .. "minute(s)..", 'error')
+                Wait(warningTimer)
             if not CheckRobberyTime() then
                 lockDoors(k)
             end
@@ -372,15 +382,27 @@ end)
 -- Threads
 
 CreateThread(function()
-    for k, v in pairs(Config.JewelleryLocation) do
-        local Dealer = AddBlipForCoord(v.coords.x, v.coords.y, v.coords.z)
+    if not Config.OneStore then
+        for k, v in pairs(Config.JewelleryLocation) do
+            local Dealer = AddBlipForCoord(v.coords.x, v.coords.y, v.coords.z)
+            SetBlipSprite (Dealer, 617)
+            SetBlipDisplay(Dealer, 4)
+            SetBlipScale  (Dealer, 0.7)
+            SetBlipAsShortRange(Dealer, true)
+            SetBlipColour(Dealer, 3)
+            BeginTextCommandSetBlipName("STRING")
+            AddTextComponentSubstringPlayerName("Vangelico Jewelery")
+            EndTextCommandSetBlipName(Dealer)
+        end
+    else
+        local Dealer = AddBlipForCoord(Config.JewelleryLocation[1].coords.x, Config.JewelleryLocation[1].coords.y, Config.JewelleryLocation[1].coords.z)
         SetBlipSprite (Dealer, 617)
         SetBlipDisplay(Dealer, 4)
         SetBlipScale  (Dealer, 0.7)
         SetBlipAsShortRange(Dealer, true)
         SetBlipColour(Dealer, 3)
         BeginTextCommandSetBlipName("STRING")
-        AddTextComponentSubstringPlayerName("Vangelico Jewellers")
+        AddTextComponentSubstringPlayerName("Vangelico Jewelery")
         EndTextCommandSetBlipName(Dealer)
     end
 end)
@@ -406,47 +428,104 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    for k, v in pairs(Config.Locations) do
-	exports["qb-target"]:AddBoxZone("jewelstore" .. k, v.coords, 1, 1, {
-	    name = "jewelstore" .. k,
-	    heading = 40,
-	    minZ = v.coords.z - 1,
-	    maxZ = v.coords.z + 1,
-	    debugPoly = false
-	}, {
-	    options = {
-		{
-		    type = "client",
-		    icon = "fa fa-hand",
-		    label = Lang:t('general.target_label'),
-		    action = function()
-			if validWeapon() then
-			    smashVitrine(k)
-			else
-			    QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
-			end
-		    end,
-		    canInteract = function()
-			if v["isOpened"] or v["isBusy"] then
-			    return false
-			end
-			return true
-		    end,
-		}
-	    },
-	    distance = 1.5
-	})
+    if not Config.OneStore then
+        for k, v in pairs(Config.Locations) do
+            exports["qb-target"]:AddBoxZone("jewelstore" .. k, v.coords, 1, 1, {
+                name = "jewelstore" .. k,
+                heading = 40,
+                minZ = v.coords.z - 1,
+                maxZ = v.coords.z + 1,
+                debugPoly = false
+            }, {
+                options = {
+                    {
+                        type = "client",
+                        icon = "fa fa-hand",
+                        label = Lang:t('general.target_label'),
+                        action = function()
+                            if validWeapon() then
+                                smashVitrine(k)
+                            else
+                                QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
+                            end
+                        end,
+                        canInteract = function()
+                            if v["isOpened"] or v["isBusy"] then
+                                return false
+                            end
+                            return true
+                        end,
+                    }
+                },
+                distance = 1.5
+            })
+        end
+    else
+        for i = 1, 20, 1 do
+            exports["qb-target"]:AddBoxZone("jewelstore" .. i, Config.Locations[i].coords, 1, 1, {
+                name = "jewelstore" .. i,
+                heading = 40,
+                minZ = Config.Locations[i].coords.z - 1,
+                maxZ = Config.Locations[i].coords.z + 1,
+                debugPoly = false
+            }, {
+                options = {
+                    {
+                        type = "client",
+                        icon = "fa fa-hand",
+                        label = Lang:t('general.target_label'),
+                        action = function()
+                            if validWeapon() then
+                                smashVitrine(i)
+                            else
+                                QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
+                            end
+                        end,
+                        canInteract = function()
+                            if Config.Locations[i]["isOpened"] or Config.Locations[i]["isBusy"] then
+                                return false
+                            end
+                            return true
+                        end,
+                    }
+                },
+                distance = 1.5
+            })
+        end
     end
 end)
 
 CreateThread(function()
-    for k, v in pairs(Config.Thermite) do
-        exports['qb-target']:AddBoxZone("jewelthermite" .. k, v.coords, 0.4, 0.8, {
-        name = "jewelthermite" .. k,
-        heading = v.h, -- 300.0
+    if not Config.OneStore then
+        for k, v in pairs(Config.Thermite) do
+            exports['qb-target']:AddBoxZone("jewelthermite" .. k, v.coords, 0.4, 0.8, {
+            name = "jewelthermite" .. k,
+            heading = v.h, -- 300.0
+            debugPoly = false,
+            minZ= v.minZ, -- 50.12
+            maxZ= v.maxZ, -- 51.32
+            }, {
+                options = {
+                    {
+                    type = "client",
+                    icon = 'fas fa-bug',
+                    label = 'Blow Fuse Box',
+                    item = 'thermite',
+                    action = function()
+                        thermiteHack(k)
+                        end
+                    }
+                },
+                distance = 2.5, -- This is the distance for you to be at for the target to turn blue, this is in GTA units and has to be a float value
+            })
+        end
+    else
+        exports['qb-target']:AddBoxZone("jewelthermite" .. 1, Config.Thermite[1].coords, 0.4, 0.8, {
+        name = "jewelthermite" .. 1,
+        heading = Config.Thermite[1].h,
         debugPoly = false,
-        minZ= v.minZ, -- 50.12
-        maxZ= v.maxZ, -- 51.32
+        minZ= Config.Thermite[1].minZ, 
+        maxZ= Config.Thermite[1].maxZ, 
         }, {
             options = {
                 {
@@ -455,7 +534,7 @@ CreateThread(function()
                 label = 'Blow Fuse Box',
                 item = 'thermite',
                 action = function()
-                    thermiteHack(k)
+                    thermiteHack(1)
                     end
                 }
             },
@@ -465,26 +544,28 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    for k, v in pairs(Config.Hacks) do
-        exports['qb-target']:AddBoxZone("jewelpc" .. k, v.coords, 0.4, 0.6, {
-        name = "jewelpc" .. k,
-        heading = v.h, -- 37.0
-        debugPoly = false,
-        minZ= v.minZ, -- 37.56
-        maxZ= v.maxZ, -- 38.56
-        }, {
-            options = {
-                {
-                type = "client",
-                icon = 'fas fa-bug',
-                label = 'Hack Security System',
-                item = 'phone',
-                action = function()
-                    securityHack()
-                    end
-                }
-            },
-            distance = 2.5, -- This is the distance for you to be at for the target to turn blue, this is in GTA units and has to be a float value
-        })
+    if not Config.OneStore then
+        for k, v in pairs(Config.Hacks) do
+            exports['qb-target']:AddBoxZone("jewelpc" .. k, v.coords, 0.4, 0.6, {
+            name = "jewelpc" .. k,
+            heading = v.h, -- 37.0
+            debugPoly = false,
+            minZ= v.minZ, -- 37.56
+            maxZ= v.maxZ, -- 38.56
+            }, {
+                options = {
+                    {
+                    type = "client",
+                    icon = 'fas fa-bug',
+                    label = 'Hack Security System',
+                    item = 'phone',
+                    action = function()
+                        securityHack()
+                        end
+                    }
+                },
+                distance = 2.5, -- This is the distance for you to be at for the target to turn blue, this is in GTA units and has to be a float value
+            })
+        end
     end
 end)
