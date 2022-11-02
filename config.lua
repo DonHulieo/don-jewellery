@@ -3,11 +3,20 @@ Config = Config or {}
 Config.VangelicoHours = { -- Store Hours
     range = {
         open = 6, -- When the doors unlock
-        close = 17 -- When they lock for the night (for some reason this is actually 6pm)
+        close = 18 -- When they lock for the night
+    },
+    alertnight = {
+        start = 18, -- The start of higher chance alerts in the evening
+        fin = 20 -- The end of higher chance alerts in the evening
+    },
+    alertmorn = {
+        start = 4, -- The start of higher chance alerts in the morning
+        fin = 6 -- The end of higher chance alerts in the morning
     }
 } 
 
 Config.OneStore = false -- Set to true if using just the main Vangelico's Jewellers
+Config.PSDispatch = true -- Set to false for base qb-policejob alerts or true to use ps-dispatch alerts
 
 Config.Cooldown = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For door auto lock function
 Config.Timeout = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For case smashing cooldown
@@ -42,13 +51,16 @@ Config.VarHackSettings = {
 
 Config.JewelleryLocation = {
     [1] = {
-        ["coords"] = vector3(-630.5, -237.13, 38.08)
+        ["coords"] = vector3(-630.5, -237.13, 38.08),
+        ["label"] = "City Vangelico's"
     },
     [2] = {
-        ["coords"] = vector3(1649.78, 4882.32, 42.16)
+        ["coords"] = vector3(1649.78, 4882.32, 42.16),
+        ["label"] = "Grapeseed Vangelico's"
     },
     [3] = {
-        ["coords"] = vector3(-378.45, 6047.68, 32.69)
+        ["coords"] = vector3(-378.45, 6047.68, 32.69),
+        ["label"] = "Paleto Vangelico's"
     }   
 }
 
