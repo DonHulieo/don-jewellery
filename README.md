@@ -1,5 +1,5 @@
 # don-jewelery
-Jewelery Robbery for QBCore with 3 stores, Thermite, VarHack and auto-lock/unlock doors!
+Jewelery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock/unlock doors!
 
 # Credits
 - [Holiday95](https://github.com/Holidayy95/qb-jewelery) For their fork of qb-jewelery which this is based on, and giving me the idea.
