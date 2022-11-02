@@ -1,5 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local firstAlarm = false
+local secondAlarm = false
 local smashing = false
 
 local storeHit = false
@@ -61,7 +62,7 @@ end
 
 local function CheckRobberyTime()
     local start = Config.VangelicoHours.range.open
-    local ends = Config.VangelicoHours.range.close
+    local ends = Config.VangelicoHours.range.close-1
     local hour = GetClockHours()
     local minute = GetClockMinutes()
     local shopHour = false
@@ -83,6 +84,58 @@ local function CheckRobberyTime()
         end
     end
     return shopHour
+end
+
+local function CheckAlertTimeNight()
+    local start = Config.VangelicoHours.alertnight.start
+    local ends = Config.VangelicoHours.alertnight.fin-1
+    local hour = GetClockHours()
+    local minute = GetClockMinutes()
+    local alertHour = false
+    if start > ends then
+        if hour == start then
+            alertHour = true
+        elseif hour == 0 then
+            alertHour = true
+        elseif hour <= ends then
+            alertHour = true
+        else
+            alertHour = false
+        end
+    else
+        if start <= hour and ends >= hour then
+            alertHour = true
+        else
+            alertHour = false
+        end
+    end
+    return alertHour
+end
+
+local function CheckAlertTimeMorn()
+    local start = Config.VangelicoHours.alertmorn.start
+    local ends = Config.VangelicoHours.alertmorn.fin-1
+    local hour = GetClockHours()
+    local minute = GetClockMinutes()
+    local alertHour = false
+    if start > ends then
+        if hour == start then
+            alertHour = true
+        elseif hour == 0 then
+            alertHour = true
+        elseif hour <= ends then
+            alertHour = true
+        else
+            alertHour = false
+        end
+    else
+        if start <= hour and ends >= hour then
+            alertHour = true
+        else
+            alertHour = false
+        end
+    end
+    return alertHour
 end
 
 local function validWeapon()
@@ -113,12 +166,25 @@ local function IsWearingHandshoes()
     return retval
 end
 
-local function smashVitrine(k)
-    if not firstAlarm then
-        TriggerServerEvent('police:server:policeAlert', 'Suspicious Activity')
-        firstAlarm = true
+local function getCamID(k)
+    local camID = 0
+    if k <= 6 then
+        camID = 31
+    elseif k == 7 or k >= 18 and k <=20 then
+        camID = 32
+    elseif k >= 12 and k <= 17 then
+        camID = 33
+    elseif k >= 8 and k <= 11 then
+        camID = 34
+    elseif k >=21 and k <= 26 then
+        camID = 35
+    elseif k >= 27 and k <= 32 then
+        camID = 36
     end
+    return camID
+end
 
+local function smashVitrine(k)
     QBCore.Functions.TriggerCallback('qb-jewellery:server:getCops', function(cops)
         if not CheckRobberyTime() then
             if not Config.Locations[k]["isOpened"] then
@@ -144,7 +210,15 @@ local function smashVitrine(k)
                         }, {}, {}, {}, function() -- Done
                             TriggerServerEvent('qb-jewellery:server:vitrineReward', k)
                             TriggerServerEvent('qb-jewellery:server:setTimeout')
-                            TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
+                                if not secondAlarm and not doorHacked then 
+                                    if not Config.PSDispatch then
+                                        TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
+                                    else
+                                        exports['ps-dispatch']:VangelicoRobbery(getCamID(k))
+                                    end
+                                    secondAlarm = true
+                                    firstAlarm = false
+                                end
                             smashing = false
                             TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
                         end, function() -- Cancel
@@ -181,8 +255,19 @@ local function smashVitrine(k)
 end
 
 local function thermiteHack(k)
-    if not firstAlarm and math.random(1, 100) <= 50 then
-        TriggerServerEvent('police:server:policeAlert', 'Suspicious Activity')
+    local AlertChance = math.random(1, 100)
+    if CheckAlertTimeMorn() or CheckAlertTimeNight() then
+        AlertChance = math.random(1, 50)
+    else
+        AlertChance = AlertChance
+    end
+
+    if AlertChance <= 10 then
+        if not Config.PSDispatch then
+            TriggerServerEvent('police:server:policeAlert', 'Suspicious Activity')
+        else
+            exports['ps-dispatch']:SuspiciousActivity()
+        end
         firstAlarm = true
     end
 
@@ -191,12 +276,13 @@ local function thermiteHack(k)
             if cops >= Config.RequiredCops then
                 local ped = PlayerPedId()
                 local coords = GetEntityCoords(ped)
+                local printChance = math.random(1, 100)
                 local Dist = #(coords - Config.Thermite[k].coords)
                 if Dist <= 1.5 then
                     if QBCore.Functions.HasItem("thermite") then
-                        if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
+                        if printChance <= 80 and not IsWearingHandshoes() then
                             TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
-                        elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
+                        elseif printChance <= 5 and IsWearingHandshoes() then
                             TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
                             QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
                         end
@@ -243,6 +329,14 @@ local function thermiteHack(k)
                                 storeHit = true
                                 DeleteObject(thermal_charge)
                                 TriggerEvent('qb-jewellery:client:HackSuccess', k)
+                                if not firstAlarm and AlertChance <= 25 then
+                                    if not Config.PSDispatch then
+                                        TriggerServerEvent('police:server:policeAlert', 'Explosion Reported')
+                                    else
+                                        exports["ps-dispatch"]:Explosion()
+                                    end
+                                    firstAlarm = true
+                                end
                             else
                                 QBCore.Functions.Notify("You Failure!", 'error', 4500)
                                 storeHit = false
@@ -363,19 +457,26 @@ RegisterNetEvent('qb-jewellery:client:HackSuccess', function(k)
                 Wait(Config.Cooldown - warningTimer)
                 QBCore.Functions.Notify("Hurry Up! The doors will be auto locking in".. warningTime .. "minute(s)..", 'error')
                 Wait(warningTimer)
+            end
             if not CheckRobberyTime() then
                 lockDoors(k)
             end
-            storeHit = false
-        else 
-            QBCore.Functions.Notify("Hack successful: All doors unlocked..", 'success')
-            unlockAll()
-            Wait(Config.Cooldown)
-            if not CheckRobberyTime() then
-                lockAll()
+        else
+            if not Config.OneStore then 
+                QBCore.Functions.Notify("Hack successful: All doors unlocked..", 'success')
+                unlockAll()
+                Wait(Config.Cooldown)
+                if not CheckRobberyTime() then
+                    lockAll()
+                end
+            else
+                QBCore.Functions.Notify("Hack successful: Security system disabled..", 'success')
             end
             doorHacked = false
         end
+        storeHit = false
+        firstAlarm = false
+        secondAlarm = false
     end
 end)
 
@@ -390,8 +491,8 @@ CreateThread(function()
             SetBlipScale  (Dealer, 0.7)
             SetBlipAsShortRange(Dealer, true)
             SetBlipColour(Dealer, 3)
-            BeginTextCommandSetBlipName("STRING")
-            AddTextComponentSubstringPlayerName("Vangelico Jewelery")
+            AddTextEntry(v.label, v.label)
+			BeginTextCommandSetBlipName(v.label)
             EndTextCommandSetBlipName(Dealer)
         end
     else
@@ -401,8 +502,8 @@ CreateThread(function()
         SetBlipScale  (Dealer, 0.7)
         SetBlipAsShortRange(Dealer, true)
         SetBlipColour(Dealer, 3)
-        BeginTextCommandSetBlipName("STRING")
-        AddTextComponentSubstringPlayerName("Vangelico Jewelery")
+        AddTextEntry(Config.JewelleryLocation[1].label, Config.JewelleryLocation[1].label)
+        BeginTextCommandSetBlipName(Config.JewelleryLocation[1].label)
         EndTextCommandSetBlipName(Dealer)
     end
 end)
@@ -544,28 +645,26 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    if not Config.OneStore then
-        for k, v in pairs(Config.Hacks) do
-            exports['qb-target']:AddBoxZone("jewelpc" .. k, v.coords, 0.4, 0.6, {
-            name = "jewelpc" .. k,
-            heading = v.h, -- 37.0
-            debugPoly = false,
-            minZ= v.minZ, -- 37.56
-            maxZ= v.maxZ, -- 38.56
-            }, {
-                options = {
-                    {
-                    type = "client",
-                    icon = 'fas fa-bug',
-                    label = 'Hack Security System',
-                    item = 'phone',
-                    action = function()
-                        securityHack()
-                        end
-                    }
-                },
-                distance = 2.5, -- This is the distance for you to be at for the target to turn blue, this is in GTA units and has to be a float value
-            })
-        end
+    for k, v in pairs(Config.Hacks) do
+        exports['qb-target']:AddBoxZone("jewelpc" .. k, v.coords, 0.4, 0.6, {
+        name = "jewelpc" .. k,
+        heading = v.h, -- 37.0
+        debugPoly = false,
+        minZ= v.minZ, -- 37.56
+        maxZ= v.maxZ, -- 38.56
+        }, {
+            options = {
+                {
+                type = "client",
+                icon = 'fas fa-bug',
+                label = 'Hack Security System',
+                item = 'phone',
+                action = function()
+                    securityHack()
+                    end
+                }
+            },
+            distance = 2.5, -- This is the distance for you to be at for the target to turn blue, this is in GTA units and has to be a float value
+        })
     end
 end)
