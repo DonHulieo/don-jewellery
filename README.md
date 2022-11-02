@@ -28,10 +28,12 @@ Jewelery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock/
 - Thermite the stores fusebox to open the front door at night.
 - Hack into Vinewood Vangelico's PC to unlock all Vangelico's for 5 minutes (or whatever you set the cooldown to).
 
-# Preview
+# Previews
 
 - [Don Jewelery](https://youtu.be/t-MO9yvzlx4)
 - [Cases](https://streamable.com/5xcg40)
+- [Dispatch Pt 1](https://streamable.com/3lspsx)
+- [Dispatch Pt 2](https://streamable.com/c9zs9z)
 
 # Store MLO's
 All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
@@ -49,6 +51,7 @@ All store locations are for GigZ Jewelers' except for the base GTA one. It's a f
 ### If you're using the config option for one store, and don't plan to use all three;
 - Don't install the store MLO's or the gigz-jewel-fix to your server.
 - Don't add the door locks for Grapeseed or Paleto to the qb-doorlocks configs file.
+- Don't add the new Cam ID's to qb-policejob.
 - Set Config.OneStore = true.
 
 # Important Config
