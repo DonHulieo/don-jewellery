@@ -15,7 +15,7 @@ Jewelery Robbery for QBCore with 3 stores, Thermite, VarHack and auto-lock/unloc
 # New Features
 - (Not really a "new" feature but) Optimised script, running at 0~0.1ms, only hitting 0.1ms when it locks or unlocks a door after a hack. 
 - 2 New stores to rob // Grapeseed & Paleto
-- Config option for just the base GTA Vengelico Jewellers or all 3
+- Config option for just the base GTA Vengelico Jewellers or all 3.
 - Doors now lock depending of the time of day, and store is "unthievable" during opening hours.
 - Cases will actually smash after you hit them, and reset after cooldown.
 - Thermite the stores fusebox to open the front door at night.
