@@ -6,7 +6,7 @@ local flags = {}
 
 -- Callback
 
-QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, cb)
+QBCore.Functions.CreateCallback('don-jewellery:server:getCops', function(source, cb)
 	local amount = 0
     for _, v in pairs(QBCore.Functions.GetQBPlayers()) do
         if v.PlayerData.job.name == "police" and v.PlayerData.job.onduty then
@@ -17,7 +17,7 @@ QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, 
     cb(amount)
 end)
 
-QBCore.Functions.CreateCallback('qb-jewellery:server:getVitrineState', function(_, cb)
+QBCore.Functions.CreateCallback('don-jewellery:server:getVitrineState', function(_, cb)
 	cb(Config.Locations)
 end)
 
@@ -41,21 +41,25 @@ end
 
 -- Events
 
-RegisterNetEvent('qb-jewellery:server:RemoveDoorItem', function()
+RegisterNetEvent('don-jewellery:server:RemoveDoorItem', function()
     local Player = QBCore.Functions.GetPlayer(source)
     local item = Config.DoorItem
     if not Player then return end
     Player.Functions.RemoveItem(item, 1)
 end)
 
-RegisterNetEvent('qb-jewellery:server:setVitrineState', function(stateType, state, k)
+RegisterNetEvent('don-jewellery:server:setVitrineState', function(stateType, state, k)
     if stateType == "isBusy" and type(state) == "boolean" and Config.Locations[k] then
         Config.Locations[k][stateType] = state
-        TriggerClientEvent('qb-jewellery:client:setVitrineState', -1, stateType, state, k)
+        TriggerClientEvent('don-jewellery:client:setVitrineState', -1, stateType, state, k)
     end
 end)
 
-RegisterNetEvent('qb-jewellery:server:vitrineReward', function(vitrineIndex)
+RegisterNetEvent('don-jewellery:server:StoreHit', function(k, bool)
+    TriggerClientEvent('don-jewellery:client:StoreHit', -1, k, bool)
+end)
+
+RegisterNetEvent('don-jewellery:server:vitrineReward', function(vitrineIndex)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local otherchance = math.random(1, 4)
@@ -63,7 +67,7 @@ RegisterNetEvent('qb-jewellery:server:vitrineReward', function(vitrineIndex)
     local cheating = false
 
     if Config.Locations[vitrineIndex] == nil or Config.Locations[vitrineIndex].isOpened ~= false then
-        exploitBan(src, "Trying to trigger an exploitable event \"qb-jewellery:server:vitrineReward\"")
+        exploitBan(src, "Trying to trigger an exploitable event \"don-jewellery:server:vitrineReward\"")
         return
     end
     if cachedPoliceAmount[source] == nil then
@@ -81,8 +85,8 @@ RegisterNetEvent('qb-jewellery:server:vitrineReward', function(vitrineIndex)
             if dist <= 25.0 then
                 Config.Locations[vitrineIndex]["isOpened"] = true
                 Config.Locations[vitrineIndex]["isBusy"] = false
-                TriggerClientEvent('qb-jewellery:client:setVitrineState', -1, "isOpened", true, vitrineIndex)
-                TriggerClientEvent('qb-jewellery:client:setVitrineState', -1, "isBusy", false, vitrineIndex)
+                TriggerClientEvent('don-jewellery:client:setVitrineState', -1, "isOpened", true, vitrineIndex)
+                TriggerClientEvent('don-jewellery:client:setVitrineState', -1, "isBusy", false, vitrineIndex)
 
                 if otherchance == odd then
                     local item = math.random(1, #Config.VitrineRewards)
@@ -116,14 +120,14 @@ RegisterNetEvent('qb-jewellery:server:vitrineReward', function(vitrineIndex)
             flags[license] = 1
         end
         if flags[license] >= 3 then
-            exploitBan("Getting flagged many times from exploiting the \"qb-jewellery:server:vitrineReward\" event")
+            exploitBan("Getting flagged many times from exploiting the \"don-jewellery:server:vitrineReward\" event")
         else
             DropPlayer(src, "Exploiting")
         end
     end
 end)
 
-RegisterNetEvent('qb-jewellery:server:setTimeout', function()
+RegisterNetEvent('don-jewellery:server:setTimeout', function()
     if not timeOut then
         timeOut = true
         TriggerEvent('qb-scoreboard:server:SetActivityBusy', "jewellery", true)
@@ -132,8 +136,8 @@ RegisterNetEvent('qb-jewellery:server:setTimeout', function()
 
             for k, _ in pairs(Config.Locations) do
                 Config.Locations[k]["isOpened"] = false
-                TriggerClientEvent('qb-jewellery:client:setVitrineState', -1, 'isOpened', false, k)
-                TriggerClientEvent('qb-jewellery:client:setAlertState', -1, false)
+                TriggerClientEvent('don-jewellery:client:setVitrineState', -1, 'isOpened', false, k)
+                TriggerClientEvent('don-jewellery:client:setAlertState', -1, false)
                 TriggerEvent('qb-scoreboard:server:SetActivityBusy', "jewellery", false)
             end
             timeOut = false
