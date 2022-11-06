@@ -3,6 +3,9 @@ local firstAlarm = false
 local secondAlarm = false
 local smashing = false
 
+local cityHit = false 
+local grapeHit = false
+local palHit = false
 local storeHit = false
 local doorHacked = false
 local doorLocked = false
@@ -24,6 +27,20 @@ local function loadAnimDict(dict)
         RequestAnimDict(dict)
         Wait(3)
     end
+end
+
+local function isStoreHit()
+    if cityHit or grapeHit or palHit then
+        return true
+    end
+    return false 
+end
+
+local function isStoreHacked()
+    if doorHacked then
+        return true
+    end
+    return false 
 end
 
 local function lockDoors(k) -- Locks Vangelico's front doors
@@ -185,11 +202,11 @@ local function getCamID(k)
 end
 
 local function smashVitrine(k)
-    QBCore.Functions.TriggerCallback('qb-jewellery:server:getCops', function(cops)
+    QBCore.Functions.TriggerCallback('don-jewellery:server:getCops', function(cops)
         if not CheckRobberyTime() then
             if not Config.Locations[k]["isOpened"] then
                 if cops >= Config.RequiredCops then
-                    if storeHit or doorHacked then
+                    if isStoreHit() or isStoreHacked() then
                         local animDict = "missheist_jewel"
                         local animName = "smash_case"
                         local ped = PlayerPedId()
@@ -208,9 +225,9 @@ local function smashVitrine(k)
                             disableMouse = false,
                             disableCombat = true,
                         }, {}, {}, {}, function() -- Done
-                            TriggerServerEvent('qb-jewellery:server:vitrineReward', k)
-                            TriggerServerEvent('qb-jewellery:server:setTimeout')
-                                if not secondAlarm and not doorHacked then 
+                            TriggerServerEvent('don-jewellery:server:vitrineReward', k)
+                            TriggerServerEvent('don-jewellery:server:setTimeout')
+                                if not secondAlarm and not isStoreHacked() then 
                                     if not Config.PSDispatch then
                                         TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
                                     else
@@ -222,11 +239,11 @@ local function smashVitrine(k)
                             smashing = false
                             TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
                         end, function() -- Cancel
-                            TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
+                            TriggerServerEvent('don-jewellery:server:setVitrineState', "isBusy", false, k)
                             smashing = false
                             TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
                         end)
-                        TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", true, k)
+                        TriggerServerEvent('don-jewellery:server:setVitrineState', "isBusy", true, k)
 
                         CreateThread(function()
                             while smashing do
@@ -271,7 +288,7 @@ local function thermiteHack(k)
         firstAlarm = true
     end
 
-    QBCore.Functions.TriggerCallback('qb-jewellery:server:getCops', function(cops)
+    QBCore.Functions.TriggerCallback('don-jewellery:server:getCops', function(cops)
         if not CheckRobberyTime() then
             if cops >= Config.RequiredCops then
                 local ped = PlayerPedId()
@@ -288,7 +305,8 @@ local function thermiteHack(k)
                         end
                         SetEntityHeading(ped, Config.Thermite[k].h)
                         exports['ps-ui']:Thermite(function(success) -- success
-                            if success then    
+                            if success then
+                                TriggerServerEvent('don-jewellery:server:StoreHit', k, true)    
                                 QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
                                 local loc = Config.Thermite[k].anim
                                 local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(ped)))
@@ -305,7 +323,7 @@ local function thermiteHack(k)
                                 SetEntityCollision(thermal_charge, false, true)
                                 AttachEntityToEntity(thermal_charge, ped, GetPedBoneIndex(ped, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
                                 Wait(4000)
-                                TriggerServerEvent('qb-jewellery:server:RemoveDoorItem')
+                                TriggerServerEvent('don-jewellery:server:RemoveDoorItem')
                             
                                 DetachEntity(thermal_charge, 1, 1)
                                 FreezeEntityPosition(thermal_charge, true)
@@ -326,9 +344,8 @@ local function thermiteHack(k)
                                 local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', ptfx, 0, 0, 0, 0x3F800000, 0, 0, 0, 0)
                                 Wait(3000)
                                 StopParticleFxLooped(effect, 0)
-                                storeHit = true
                                 DeleteObject(thermal_charge)
-                                TriggerEvent('qb-jewellery:client:HackSuccess', k)
+                                TriggerEvent('don-jewellery:client:HackSuccess', k)
                                 if not firstAlarm and AlertChance <= 25 then
                                     if not Config.PSDispatch then
                                         TriggerServerEvent('police:server:policeAlert', 'Explosion Reported')
@@ -339,7 +356,6 @@ local function thermiteHack(k)
                                 end
                             else
                                 QBCore.Functions.Notify("You Failure!", 'error', 4500)
-                                storeHit = false
                             end
                         end, Config.ThermiteSettings.time, Config.ThermiteSettings.gridsize, Config.ThermiteSettings.incorrectBlocks)
                     else
@@ -377,7 +393,7 @@ local function stopHack()
 end
 
 local function securityHack()
-    QBCore.Functions.TriggerCallback('qb-jewellery:server:getCops', function(cops)
+    QBCore.Functions.TriggerCallback('don-jewellery:server:getCops', function(cops)
         if not CheckRobberyTime() then
             if cops >= Config.RequiredCops then
                 local ped = PlayerPedId()
@@ -396,9 +412,10 @@ local function securityHack()
                             Wait(2500)
                             exports['ps-ui']:VarHack(function(success)
                                 if success then
+                                    TriggerServerEvent('don-jewellery:server:StoreHit', 'all', true)
+                                    Wait(250)
                                     stopHack()
-                                    doorHacked = true
-                                    TriggerEvent('qb-jewellery:client:HackSuccess')
+                                    TriggerEvent('don-jewellery:client:HackSuccess')
                                 else
                                     QBCore.Functions.Notify("I'll have to try that again..", 'error', 3500)
                                     stopHack()
@@ -425,12 +442,12 @@ end
 -- Events
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-	QBCore.Functions.TriggerCallback('qb-jewellery:server:getVitrineState', function(result)
+	QBCore.Functions.TriggerCallback('don-jewellery:server:getVitrineState', function(result)
 		Config.Locations = result
 	end)
 end)
 
-RegisterNetEvent('qb-jewellery:client:setVitrineState', function(stateType, state, k)
+RegisterNetEvent('don-jewellery:client:setVitrineState', function(stateType, state, k)
     Config.Locations[k][stateType] = state
     if stateType == 'isBusy' and state == true then
         CreateModelSwap(Config.Locations[k]["coords"].x, Config.Locations[k]["coords"].y, Config.Locations[k]["coords"].z, 0.1, Config.Locations[k]['PropStart'], Config.Locations[k]['PropEnd'], false)
@@ -441,9 +458,26 @@ RegisterNetEvent('qb-jewellery:client:setVitrineState', function(stateType, stat
     end
 end)
 
-RegisterNetEvent('qb-jewellery:client:HackSuccess', function(k)
-    if storeHit or doorHacked then
-        if storeHit  and not doorHacked then
+RegisterNetEvent('don-jewellery:client:StoreHit', function(k, bool)
+    if k then
+        if k == 1 then
+            cityHit = bool
+        elseif k == 2 then
+            grapeHit = bool
+        elseif k == 3 then
+            palHit = bool
+        elseif k == 'all' then
+            doorHacked = bool
+            cityHit = bool
+            grapeHit = bool
+            palHit = bool
+        end
+    end
+end)
+
+RegisterNetEvent('don-jewellery:client:HackSuccess', function(k)
+    if isStoreHit() or isStoreHacked() then
+        if isStoreHit()  and not isStoreHacked() then
             if not Config.OneStore then
                 QBCore.Functions.Notify("Fuses blown! Should be opening soon..", 'success')
                 unlockDoors(k)
@@ -461,6 +495,7 @@ RegisterNetEvent('qb-jewellery:client:HackSuccess', function(k)
             if not CheckRobberyTime() then
                 lockDoors(k)
             end
+            TriggerServerEvent('don-jewellery:server:StoreHit', k, false)
         else
             if not Config.OneStore then 
                 QBCore.Functions.Notify("Hack successful: All doors unlocked..", 'success')
@@ -469,12 +504,11 @@ RegisterNetEvent('qb-jewellery:client:HackSuccess', function(k)
                 if not CheckRobberyTime() then
                     lockAll()
                 end
+                TriggerServerEvent('don-jewellery:server:StoreHit', 'all', false)
             else
                 QBCore.Functions.Notify("Hack successful: Security system disabled..", 'success')
             end
-            doorHacked = false
         end
-        storeHit = false
         firstAlarm = false
         secondAlarm = false
     end
@@ -513,7 +547,7 @@ CreateThread(function()
     while true do
         Wait(1000)
         if not CheckRobberyTime() then
-            if not storeHit and not doorHacked and not doorLocked then
+            if not isStoreHit() and not doorHacked and not doorLocked then
                 Wait(1000)
                 lockAll()
                 loopDone = false
