@@ -458,7 +458,8 @@ RegisterNetEvent('don-jewellery:client:setVitrineState', function(stateType, sta
     end
 end)
 
-RegisterNetEvent('don-jewellery:client:StoreHit', function(k, bool)
+RegisterNetEvent('don-jewellery:client:StoreHit')
+AddEventHandler('don-jewellery:client:StoreHit', function(k, bool)
     if k then
         if k == 1 then
             cityHit = bool
