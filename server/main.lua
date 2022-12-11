@@ -55,7 +55,8 @@ RegisterNetEvent('don-jewellery:server:setVitrineState', function(stateType, sta
     end
 end)
 
-RegisterNetEvent('don-jewellery:server:StoreHit', function(k, bool)
+RegisterNetEvent('don-jewellery:server:StoreHit')
+AddEventHandler('don-jewellery:server:StoreHit', function(k, bool)
     TriggerClientEvent('don-jewellery:client:StoreHit', -1, k, bool)
 end)
 
