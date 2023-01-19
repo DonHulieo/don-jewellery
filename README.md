@@ -238,6 +238,7 @@ This is not a QBCore script nor is it maintained by them, please refer to my dis
 
 ## Changelog
 
+- v1.1.9 - Fixed Missing Convar Check for Fr Translation
 - v1.1.8 - Linting and Updated Readme
 - v1.1.7 - Added Missing Event Handlers
 - v1.1.6 - Added Server Event, three new variables and changed resource officially from qb-jewellery to don-jewellery. Server Event, "don-jewellery:server:StoreHit", sets one of the new variables (cityHit, grapeHit and palHit) true or false for all clients, now people other than the person who thermited can actually rob the store again.
