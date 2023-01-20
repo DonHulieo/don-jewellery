@@ -46,7 +46,12 @@ All store locations are for GigZ Jewelers' except for the base GTA one. It's a f
 
 - [GigZ Jewel Store](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261)
 - **MAKE SURE TO INSTALL THE HEIST VERSION**
-- If you're using these MLO's you'll need to use my updated fxmanifest.lua and interiorproxies.meta in don-jewelery/gigz-jewel-fix/
+- If you're using these MLO's, you'll need to update line 3 in gigz_jewel_free_heist\interiorproxies.meta to the following:
+
+```xml
+<startFrom value="4200" />
+```
+
 - You'll also need to add the following code to qb-policejob/config.lua in Config.SecurityCameras after line 100 or after index 34 (Vangelico's Jewelers CAM#4);
 
 ```lua
