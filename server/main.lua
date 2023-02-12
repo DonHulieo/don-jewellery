@@ -1,5 +1,4 @@
 local QBCore = exports['qb-core']:GetCoreObject()
-local timeOut = false
 
 local TimeOuts = {
   [1] = false,
@@ -7,8 +6,8 @@ local TimeOuts = {
   [3] = false
 }
 
-local cachedPoliceAmount = {}
-local flags = {}
+local CachedPoliceAmount = {}
+local Flags = {}
 
 -------------------------------- FUNCTIONS --------------------------------
 
@@ -39,10 +38,10 @@ RegisterServerEvent('don-jewellery:server:RemoveDoorItem', function()
   Player.Functions.RemoveItem(item, 1)
 end)
 
-RegisterServerEvent('don-jewellery:server:setVitrineState', function(stateType, state, k)
+RegisterServerEvent('don-jewellery:server:SetVitrineState', function(stateType, state, k)
   if stateType == "isBusy" and type(state) == "boolean" and Config.Locations[k] then
     Config.Locations[k][stateType] = state
-    TriggerClientEvent('don-jewellery:client:setVitrineState', -1, stateType, state, k)
+    TriggerClientEvent('don-jewellery:client:SetVitrineState', -1, stateType, state, k)
   end
 end)
 
@@ -52,18 +51,18 @@ RegisterServerEvent('don-jewellery:server:StoreHit', function(k, bool)
   if not Player then return end
   TriggerClientEvent('don-jewellery:client:StoreHit', -1, k, bool)
   if k == 'all' then Config.JewelleryLocation[1].hacked = bool end
-  for key, value in pairs(Config.JewelleryLocation) do
+  for i = 1, #Config.JewelleryLocation do
     if k == 'all' then
-      Config.JewelleryLocation[key].hit = bool
+      Config.JewelleryLocation[i].hit = bool
     else
-      if key == k then
+      if i == k then
         Config.JewelleryLocation[k].hit = bool
       end
     end
   end
 end)
 
-RegisterServerEvent('don-jewellery:server:vitrineReward', function(vitrineIndex)
+RegisterServerEvent('don-jewellery:server:VitrineReward', function(vitrineIndex)
   math.randomseed(os.time())
   local src = source
   local Player = QBCore.Functions.GetPlayer(src)
@@ -72,10 +71,10 @@ RegisterServerEvent('don-jewellery:server:vitrineReward', function(vitrineIndex)
   local cheating = false
 
   if Config.Locations[vitrineIndex] == nil or Config.Locations[vitrineIndex].isOpened ~= false then
-    exploitBan(src, "Trying to trigger an exploitable event \"don-jewellery:server:vitrineReward\"")
+    exploitBan(src, "Trying to trigger an exploitable event \"don-jewellery:server:VitrineReward\"")
     return
   end
-  if cachedPoliceAmount[source] == nil then
+  if CachedPoliceAmount[src] == nil then
     DropPlayer(src, "Exploiting")
     return
   end
@@ -84,14 +83,14 @@ RegisterServerEvent('don-jewellery:server:vitrineReward', function(vitrineIndex)
   local plrCoords = GetEntityCoords(plrPed)
   local vitrineCoords = Config.Locations[vitrineIndex].coords
 
-  if cachedPoliceAmount[source] >= Config.RequiredCops then
+  if CachedPoliceAmount[src] >= Config.RequiredCops then
     if plrPed then
       local dist = #(plrCoords - vitrineCoords)
       if dist <= 25.0 then
         Config.Locations[vitrineIndex]["isOpened"] = true
         Config.Locations[vitrineIndex]["isBusy"] = false
-        TriggerClientEvent('don-jewellery:client:setVitrineState', -1, "isOpened", true, vitrineIndex)
-        TriggerClientEvent('don-jewellery:client:setVitrineState', -1, "isBusy", false, vitrineIndex)
+        TriggerClientEvent('don-jewellery:client:SetVitrineState', -1, "isOpened", true, vitrineIndex)
+        TriggerClientEvent('don-jewellery:client:SetVitrineState', -1, "isBusy", false, vitrineIndex)
 
         if otherchance == odd then
           local item = math.random(1, #Config.VitrineRewards)
@@ -119,20 +118,20 @@ RegisterServerEvent('don-jewellery:server:vitrineReward', function(vitrineIndex)
 
   if cheating then
     local license = Player.PlayerData.license
-    if flags[license] then
-      flags[license] = flags[license] + 1
+    if Flags[license] then
+      Flags[license] = Flags[license] + 1
     else
-      flags[license] = 1
+      Flags[license] = 1
     end
-    if flags[license] >= 3 then
-      exploitBan("Getting flagged many times from exploiting the \"don-jewellery:server:vitrineReward\" event")
+    if Flags[license] >= 3 then
+      exploitBan("Getting flagged many times from exploiting the \"don-jewellery:server:VitrineReward\" event")
     else
       DropPlayer(src, "Exploiting")
     end
   end
 end)
 
-RegisterServerEvent('don-jewellery:server:setTimeout', function(vitrine)
+RegisterServerEvent('don-jewellery:server:SetTimeout', function(vitrine)
   local store = 0
   if vitrine >= 1 and vitrine <= 20 then
     store = 1
@@ -147,14 +146,14 @@ RegisterServerEvent('don-jewellery:server:setTimeout', function(vitrine)
     CreateThread(function()
       Wait(Config.Timeout)
       Config.JewelleryLocation[1]["hacked"] = false
-      for k, _ in pairs(Config.JewelleryLocation) do
-        Config.JewelleryLocation[k]["hit"] = false
+      for i = 1, #Config.JewelleryLocation do
+        Config.JewelleryLocation[i]["hit"] = false
       end
       TriggerClientEvent('don-jewellery:client:StoreHit', -1, 'all', false)
-      for k, _ in pairs(Config.Locations) do
-        Config.Locations[k]["isOpened"] = false
-        TriggerClientEvent('don-jewellery:client:setVitrineState', -1, 'isOpened', false, k)
-        TriggerClientEvent('don-jewellery:client:setAlertState', -1, false)
+      for i = 1, #Config.Locations do
+        Config.Locations[i]["isOpened"] = false
+        TriggerClientEvent('don-jewellery:client:SetVitrineState', -1, 'isOpened', false, i)
+        TriggerClientEvent('don-jewellery:client:SetAlertState', -1, false)
         TriggerEvent('qb-scoreboard:server:SetActivityBusy', "jewellery", false)
       end
       TimeOuts[store] = false
@@ -164,17 +163,19 @@ end)
 
 -------------------------------- CALLBACKS --------------------------------
 
-QBCore.Functions.CreateCallback('don-jewellery:server:getCops', function(source, cb)
+QBCore.Functions.CreateCallback('don-jewellery:server:GetCops', function(source, cb)
+  local src = source
 	local amount = 0
   for _, v in pairs(QBCore.Functions.GetQBPlayers()) do
     if v.PlayerData.job.name == "police" and v.PlayerData.job.onduty then
       amount = amount + 1
     end
   end
-  cachedPoliceAmount[source] = amount
+  CachedPoliceAmount[src] = amount
   cb(amount)
 end)
 
-QBCore.Functions.CreateCallback('don-jewellery:server:getVitrineState', function(_, cb)
-	cb(Config.Locations)
+QBCore.Functions.CreateCallback('don-jewellery:server:GetJewelleryState', function(_, cb)
+  local data = {Locations = Config.Locations, Hacks = Config.JewelleryLocation}
+	cb(data)
 end)

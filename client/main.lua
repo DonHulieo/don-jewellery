@@ -246,7 +246,7 @@ local function getCamID(k)
 end
 
 local function smashVitrine(k)
-  QBCore.Functions.TriggerCallback('don-jewellery:server:getCops', function(cops)
+  QBCore.Functions.TriggerCallback('don-jewellery:server:GetCops', function(cops)
     if not checkRobberyTime() then
       if not Config.Locations[k]["isOpened"] then
         if cops >= Config.RequiredCops then
@@ -269,8 +269,8 @@ local function smashVitrine(k)
               disableMouse = false,
               disableCombat = true,
             }, {}, {}, {}, function() -- Done
-              TriggerServerEvent('don-jewellery:server:vitrineReward', k)
-              TriggerServerEvent('don-jewellery:server:setTimeout', k)
+              TriggerServerEvent('don-jewellery:server:VitrineReward', k)
+              TriggerServerEvent('don-jewellery:server:SetTimeout', k)
                 if not secondAlarm and not isStoreHacked() then 
                   if not Config.PSDispatch then
                     TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
@@ -283,11 +283,11 @@ local function smashVitrine(k)
               smashing = false
               TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
             end, function() -- Cancel
-              TriggerServerEvent('don-jewellery:server:setVitrineState', "isBusy", false, k)
+              TriggerServerEvent('don-jewellery:server:SetVitrineState', "isBusy", false, k)
               smashing = false
               TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
             end)
-            TriggerServerEvent('don-jewellery:server:setVitrineState', "isBusy", true, k)
+            TriggerServerEvent('don-jewellery:server:SetVitrineState', "isBusy", true, k)
 
             CreateThread(function()
               while smashing do
@@ -332,7 +332,7 @@ local function thermiteHack(k)
     firstAlarm = true
   end
 
-  QBCore.Functions.TriggerCallback('don-jewellery:server:getCops', function(cops)
+  QBCore.Functions.TriggerCallback('don-jewellery:server:GetCops', function(cops)
     if not checkRobberyTime() then
       if cops >= Config.RequiredCops then
         local ped = PlayerPedId()
@@ -432,7 +432,7 @@ local function stopHack()
 end
 
 local function securityHack()
-  QBCore.Functions.TriggerCallback('don-jewellery:server:getCops', function(cops)
+  QBCore.Functions.TriggerCallback('don-jewellery:server:GetCops', function(cops)
     if not checkRobberyTime() then
       if cops >= Config.RequiredCops then
         local ped = PlayerPedId()
@@ -481,8 +481,9 @@ end
 -------------------------------- HANDLERS --------------------------------
 
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
-	QBCore.Functions.TriggerCallback('don-jewellery:server:getVitrineState', function(result)
-		Config.Locations = result
+	QBCore.Functions.TriggerCallback('don-jewellery:server:GetJewelleryState', function(result)
+		Config.Locations = result.Locations
+    Config.JewelleryLocation = result.Hacks
 	end)
   local blip = GetFirstBlipInfoId(617)
   if not DoesBlipExist(blip) then
@@ -491,9 +492,9 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
 end)
 
 AddEventHandler('QBCore:Client:OnPlayerUnload', function()
-  for k, v in pairs(Config.Locations) do
-    if v.isBusy then
-      TriggerServerEvent('don-jewellery:server:setVitrineState', false, k)
+  for i = 1, #Config.Locations do
+    if Config.Locations[i].isBusy then
+      TriggerServerEvent('don-jewellery:server:SetVitrineState', false, i)
     end
   end
   removeBlips()
@@ -501,29 +502,31 @@ end)
 
 AddEventHandler('onResourceStart', function(resource)
   if resource ~= GetCurrentResourceName() then return end
-  for k, v in pairs(Config.Locations) do
-    if v.isBusy then
-      TriggerServerEvent('don-jewellery:server:setVitrineState', false, k)
+  for i = 1, #Config.Locations do
+    if Config.Locations[i].isBusy then
+      TriggerServerEvent('don-jewellery:server:SetVitrineState', false, i)
     end
   end
+  TriggerServerEvent('don-jewellery:server:StoreHit', 'all', false)
   createBlips()
 end)
 
 AddEventHandler('onResourceStop', function(resource)
   if resource ~= GetCurrentResourceName() then return end
-  for k, v in pairs(Config.Locations) do
-    if v.isBusy then
-      TriggerServerEvent('don-jewellery:server:setVitrineState', false, k)
+  for i = 1, #Config.Locations do
+    if Config.Locations[i].isBusy then
+      TriggerServerEvent('don-jewellery:server:SetVitrineState', false, i)
     end
   end
+  TriggerServerEvent('don-jewellery:server:StoreHit', 'all', false)
   removeBlips()
 end)
 
 -------------------------------- EVENTS --------------------------------
 
-RegisterNetEvent('don-jewellery:client:lockAllDoors', lockAll)
+RegisterNetEvent('don-jewellery:client:LockAllDoors', lockAll)
 
-RegisterNetEvent('don-jewellery:client:setVitrineState', function(stateType, state, k)
+RegisterNetEvent('don-jewellery:client:SetVitrineState', function(stateType, state, k)
   Config.Locations[k][stateType] = state
   if stateType == 'isBusy' and state == true then
     CreateModelSwap(Config.Locations[k]["coords"].x, Config.Locations[k]["coords"].y, Config.Locations[k]["coords"].z, 0.1, Config.Locations[k]['PropStart'], Config.Locations[k]['PropEnd'], false)
@@ -686,7 +689,7 @@ else
         type = "client",
         icon = 'fas fa-bug',
         label = 'Blow Fuse Box',
-        item = 'thermite',
+        item = Config.DoorItem,
         action = function()
             thermiteHack(1)
           end
