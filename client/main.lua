@@ -537,15 +537,15 @@ RegisterNetEvent('don-jewellery:client:SetVitrineState', function(stateType, sta
   end
 end)
 
-RegisterNetEvent('don-jewellery:client:StoreHit', function(k, bool)
-  if not k or not bool then return end
-  if k == 'all' then Config.JewelleryLocation[1].hacked = bool end
-  for key, value in pairs(Config.JewelleryLocation) do
-    if k == 'all' then
-      Config.JewelleryLocation[key].hit = bool
+RegisterNetEvent('don-jewellery:client:StoreHit', function(storeIndex, isHit)
+  if not storeIndex or not isHit then return end
+  if storeIndex == 'all' then Config.JewelleryLocation[1].hacked = isHit end
+  for k, _ in pairs(Config.JewelleryLocation) do
+    if storeIndex == 'all' then
+      Config.JewelleryLocation[k].hit = isHit
     else
-      if key == k then
-        Config.JewelleryLocation[k].hit = bool
+      if k == storeIndex then
+        Config.JewelleryLocation[storeIndex].hit = isHit
       end
     end
   end
@@ -562,10 +562,10 @@ RegisterNetEvent('don-jewellery:client:HackSuccess', function(k)
         local warningTimer = 1 * (60 * 2000)
         local warningTime = warningTimer / (60 * 2000)
         local cooldownTime = Config.Cooldown / (60 * 2000)
-        QBCore.Functions.Notify("Fuses blown! The doors should be open for".. cooldownTime .. " minutes..", 'success')
+        QBCore.Functions.Notify("Fuses blown! The doors should be open for ".. cooldownTime .. " minutes..", 'success')
         unlockDoors(k)
         Wait(Config.Cooldown - warningTimer)
-        QBCore.Functions.Notify("Hurry Up! The doors will be auto locking in".. warningTime .. " minute(s)..", 'error')
+        QBCore.Functions.Notify("Hurry Up! The doors will be auto locking in ".. warningTime .. " minute(s)..", 'error')
         Wait(warningTimer)
       end
       if not checkRobberyTime() then

@@ -149,24 +149,24 @@ Config.WhitelistedWeapons = {
 
 Config.VitrineRewards = {
   [1] = {
-    ["item"] = "rolex",
-    ["amount"] = {
-      ["min"] = 1,
-      ["max"] = 4
+    ['item'] = 'rolex',
+    ['amount'] = {
+      ['min'] = 1,
+      ['max'] = 4
     }
   },
   [2] = {
-    ["item"] = "diamond_ring",
-    ["amount"] = {
-      ["min"] = 1,
-      ["max"] = 4
+    ['item'] = 'diamond_ring',
+    ['amount'] = {
+      ['min'] = 1,
+      ['max'] = 4
     }
   },
   [3] = {
-    ["item"] = "goldchain",
-    ["amount"] = {
-      ["min"] = 1,
-      ["max"] = 4
+    ['item'] = 'goldchain',
+    ['amount'] = {
+      ['min'] = 1,
+      ['max'] = 4
     }
   }
 }
