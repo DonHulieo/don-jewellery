@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'DonHulieo'
 description 'Jewelery Store Heist for QBCore'
-version '1.2.2'
+version '1.2.3'
 
 shared_scripts {'@qb-core/shared/locale.lua', 'locale/en.lua', 'locale/*.lua', 'config.lua'}
 
