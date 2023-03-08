@@ -4,7 +4,7 @@ Jewellery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock
 
 ## Credits
 
-- [Holiday95](https://github.com/Holidayy95/qb-jewellery) For their fork of qb-jewellery which this is based on, and giving me the idea.
+- [Holiday95](https://github.com/Holidayy95/qb-jewelery) For their fork of qb-jewellery which this is based on, and giving me the idea.
 - [QBCore Framework](https://github.com/qbcore-framework) For the orginal qb-jewellery and for inspiring me to code.
 - [MrNewb](https://github.com/MrNewb) For showing me how to get the cases to break, absolute legend!
 
