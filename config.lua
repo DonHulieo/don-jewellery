@@ -25,7 +25,7 @@ Config.Dispatch = 'ps' --[[ Police Dispatch System
   Set to 'ps' for police-script 
   Set to 'qb' for base qb-policejob alerts 
   Set to 'cd' for cd_policealerts ]
-]--
+]]--
 
 Config.DoorLock = 'qb' --[[ Doorlock System 
   Set to 'qb' for qb-doorlock  
