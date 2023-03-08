@@ -302,7 +302,7 @@ AddEventHandler('don-jewellery:client:SmashCase', function(case)
                   TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
                 elseif Config.Dispatch == 'ps' then
                   exports['ps-dispatch']:VangelicoRobbery(getCamID(case))
-                elseif Config.Dispatch == 'cd'
+                elseif Config.Dispatch == 'cd' then
                   alertsCD('robbery')
                 end
                 secondAlarm = true
