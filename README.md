@@ -98,6 +98,7 @@ Config.VangelicoHours = { -- Store Hours
 ```
 
 - The range is the time the store is open, and the alert times are the times the police will have a higher chance of getting an alert.
+- By setting open and close to 0, the store will always be locked and robbable.
 
 #### 1.2. Variables
 
