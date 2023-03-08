@@ -109,12 +109,14 @@ Config.PSDispatch = true -- Set to false for base qb-policejob alerts or true to
 Config.Cooldown = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For door auto lock function
 Config.Timeout = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For case smashing cooldown
 Config.AutoLock = true -- Set to false if you don't want the doors to auto lock/lock at all
+Config.DoorLock = 'qb' -- Set to 'qb' if using qb-doorlocks, 'ox' if using ox_doorlock
 Config.RequiredCops = 3
 ```
 
 - The cooldown is the time (in minutes) the doors will auto lock after a hack.
 - The timeout is the time (in minutes) the cases will reset after smashing.
 - If `Config.AutoLock` is set to false, the doors will always be unlocked.
+- Set `Config.DoorLock` to 'qb' if using qb-doorlocks, 'ox' if using ox_doorlock. Make sure to uncomment '@ox_lib/init.lua' from the fxmanifest.lua if using ox.
 - The required cops is the amount of cops online required for the store to be "thievable".
 
 #### 1.3. Door Locks

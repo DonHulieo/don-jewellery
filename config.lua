@@ -5,6 +5,7 @@ Config.PSDispatch = true -- Set to false for base qb-policejob alerts or true to
 Config.Cooldown = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For door auto lock function
 Config.Timeout = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For case smashing cooldown
 Config.AutoLock = true -- Set to false if you don't want the doors to auto lock/lock at all
+Config.DoorLock = 'qb' -- Set to 'qb' for qb-doorlock or 'ox' for ox_doorlock // If using ox, uncomment '@ox_lib/init.lua', from the fxmanifest.lua
 Config.RequiredCops = 3
 
 Config.VangelicoHours = { -- Store Hours

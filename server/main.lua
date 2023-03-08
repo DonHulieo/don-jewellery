@@ -70,11 +70,24 @@ end)
 RegisterServerEvent('don-jewellery:server:ToggleDoorlocks', function(store, locked, allStores)
   local src = source
   if not allStores then
-    TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[store]['Doors'].main, locked, src, false, false)
+    if not Config.Stores[store] then return end
+    if Config.DoorLock == 'qb' then
+      TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[store]['Doors'].main, locked, src, false, false)
+    elseif Config.DoorLock == 'ox' then
+      local door = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[store]['Doors'].main)
+      TriggerEvent('ox_doorlock:setState', door.id, locked)
+    end
   else
     for i = 1, #Config.Stores do
-      TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[i]['Doors'].main, locked, src, false, false)
-      TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[i]['Doors'].sec, locked, src, false, false)
+      if Config.DoorLock == 'qb' then
+        TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[i]['Doors'].main, locked, src, false, false)
+        TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[i]['Doors'].sec, locked, src, false, false)
+      elseif Config.DoorLock == 'ox' then
+        local main = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[i]['Doors'].main)
+        local sec = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[i]['Doors'].sec)
+        TriggerEvent('ox_doorlock:setState', main.id, locked)
+        TriggerEvent('ox_doorlock:setState', sec.id, locked)
+      end
     end
   end
 end)

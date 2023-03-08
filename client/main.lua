@@ -1,6 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-local firstAlarm, secondAlarm, smashing  = false, false, false
+local firstAlarm, secondAlarm, smashing, locked  = false, false, false, false
 
 -------------------------------- FUNCTIONS --------------------------------
 
@@ -437,6 +437,7 @@ AddEventHandler('don-jewellery:client:HackSuccess', function(store)
         QBCore.Functions.Notify(Lang:t('success.store_hit_threestore'), 'success')
         if Config.AutoLock then
           TriggerServerEvent('don-jewellery:server:ToggleDoorlocks', store, false, false)
+          locked = false
           Wait(Config.Cooldown)
         end
       else
@@ -445,20 +446,24 @@ AddEventHandler('don-jewellery:client:HackSuccess', function(store)
         local cooldownTime = Config.Cooldown / (60 * 2000)
         QBCore.Functions.Notify(Lang:t('success.store_hit_onestore', {value = math.floor(cooldownTime)}), 'success')
         if Config.AutoLock then TriggerServerEvent('don-jewellery:server:ToggleDoorlocks', store, false, false) end
+        locked = false
         Wait(Config.Cooldown - warningTimer)
         QBCore.Functions.Notify(Lang:t('info.one_store_warning', {value = math.floor(warningTime)}), 'primary')
         Wait(warningTimer)
       end
       if Config.AutoLock and not checkTime(Config.VangelicoHours.range.open, Config.VangelicoHours.range.close) then
         TriggerServerEvent('don-jewellery:server:ToggleDoorlocks', store, true, false)
+        locked = true
       end
       TriggerServerEvent('don-jewellery:server:StoreHit', store, false)
     else
       if not Config.OneStore then 
         QBCore.Functions.Notify(Lang:t('success.hacked_threestore'), 'success')
         if Config.AutoLock then TriggerServerEvent('don-jewellery:server:ToggleDoorlocks', nil, false, true) end
+        locked = false
         Wait(Config.Cooldown)
         if Config.AutoLock and not checkTime(Config.VangelicoHours.range.open, Config.VangelicoHours.range.close) then
+          locked = true
           TriggerServerEvent('don-jewellery:server:ToggleDoorlocks', nil, true, true)
         end
         TriggerServerEvent('don-jewellery:server:StoreHit', 'all', false)
@@ -638,9 +643,10 @@ CreateThread(function()
     Wait(1000)
     if LocalPlayer.state.isLoggedIn then
       if not checkTime(Config.VangelicoHours.range.open, Config.VangelicoHours.range.close) then
-        if not isStoreHit(nil, false) and not isStoreHacked()then
+        if (not isStoreHit(nil, false) and not isStoreHacked()) and not locked then
           Wait(1000)
           TriggerServerEvent('don-jewellery:server:ToggleDoorlocks', nil, true, true)
+          locked = true
           loopDone = false
         end
       else
