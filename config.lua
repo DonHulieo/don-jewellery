@@ -4,20 +4,21 @@ Config.OneStore = false -- Set to true if using just the main Vangelico's Jewell
 Config.PSDispatch = true -- Set to false for base qb-policejob alerts or true to use ps-dispatch alerts
 Config.Cooldown = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For door auto lock function
 Config.Timeout = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For case smashing cooldown
-Config.RequiredCops = 0
+Config.AutoLock = true -- Set to false if you don't want the doors to auto lock/lock at all
+Config.RequiredCops = 3
 
 Config.VangelicoHours = { -- Store Hours
-  range = {
-    open = 6, -- When the doors unlock
-    close = 18 -- When they lock for the night
+  range = { -- Set both to 0 if you want the store to be robbed 24/7
+    open = 6, -- When the doors unlock // Default 6am
+    close = 18 -- When they lock for the night // Default 6pm
   },
   alertnight = {
-    start = 18, -- The start of higher chance alerts in the evening
-    fin = 20 -- The end of higher chance alerts in the evening
+    start = 18, -- The start of higher chance alerts in the evening // Default 6pm
+    fin = 20 -- The end of higher chance alerts in the evening // Default 8pm
   },
   alertmorn = {
-    start = 4, -- The start of higher chance alerts in the morning
-    fin = 6 -- The end of higher chance alerts in the morning
+    start = 4, -- The start of higher chance alerts in the morning // Default 4am
+    fin = 6 -- The end of higher chance alerts in the morning // Default 6am
   }
 }
 
