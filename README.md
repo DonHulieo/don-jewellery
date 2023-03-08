@@ -180,7 +180,8 @@ Config.VarHackSettings = {
 ### 2. Door Configs
 
 - Make a copy of the door config below and place it inside `qb-doorlocks/configs/` in it's own .lua file.
-**If using ox_doorlock, the file must be named `jewllery_stores` and can be placed in the convert folder.**
+
+- **If using ox_doorlock, the file must be named `jewllery_stores` and can be placed in the convert folder.**
 
 ```lua
 Config.DoorList['jewellery-citymain'] = {
