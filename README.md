@@ -40,6 +40,10 @@ Jewelery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock/
 - [Dispatch Pt 1](https://streamable.com/3lspsx)
 - [Dispatch Pt 2](https://streamable.com/c9zs9z)
 
+## Translations
+
+- The english locale is the only fully completed one, and has been recently updated to include all notifications. If you would like to help translate this resource, please make a pull request with the translation.
+
 ## Store MLO's
 
 All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
@@ -113,42 +117,59 @@ Config.RequiredCops = 0
 #### 1.3. Door Locks
 
 ```lua
-Config.Doors = { -- qb-doorlock door IDs
-    [1] = { -- City Vangelico's
-        ["main"] = "jewelery-citymain",
-        ["sec"] = "jewelery-citysec"
+Config.Stores = {
+  [1] = { -- City Vangelico's
+    label = 'Vangelico\'s Jewellers',
+    coords = vector3(-630.5, -237.13, 38.08),
+    ['Doors'] = {
+      main = 'jewelery-citymain',
+      sec = 'jewelery-citysec'
     },
-    [2] = { -- Grapeseed Vangelico's
-        ["main"] = "jewelery-grapemain",
-        ["sec"] = "jewelery-grapesec"
+    ...
+  },
+  [2] = { -- Grapeseed Vangelico's
+    label = 'Vangelico\'s Jewellers',
+    coords = vector3(1649.78, 4882.32, 42.16),
+    ['Doors'] = {
+      main = 'jewelery-grapemain',
+      sec = 'jewelery-grapesec'
     },
-    [3] = { -- Paleto Vangelico's
-        ["main"] = "jewelery-palmain",
-        ["sec"] = "jewelery-palsec"
-    }
+    ...
+  },
+  [3] = { -- Paleto Vangelico's
+    label = 'Vangelico\'s Jewellers',
+    coords = vector3(-378.45, 6047.68, 32.69),
+    ['Doors'] = {
+      main = 'jewelery-palmain',
+      sec = 'jewelery-palsec'
+    },
+    ...
+  }
 }
 ```
 
-- The door IDs are the door names you set in qb-doorlocks/config.lua
+- The door names must match the door names in qb-doorlocks.
 
 #### 1.4. Hacks
 
 ```lua
 Config.DoorItem = 'thermite' -- Item to remove\check for when placing a charge
 Config.ThermiteSettings = {
-    time = 60, -- time the hack displays for
-    gridsize = 5, -- (5, 6, 7, 8, 9, 10) size of grid by square units, ie. gridsize = 5 is a 5 * 5 (25) square grid
-    incorrectBlocks = 10 -- incorrectBlocks = number of incorrect blocks after which the game will fail
+  time = 60, -- time the hack displays for
+  gridsize = 5, -- (5, 6, 7, 8, 9, 10) size of grid by square units, ie. gridsize = 5 is a 5 * 5 (25) square grid
+  incorrectBlocks = 10 -- incorrectBlocks = number of incorrect blocks after which the game will fail
 }
 
+Config.HackItem = 'phone' -- Item to remove\check for when hacking
 Config.VarHackSettings = {
-    blocks = 2, -- time the hack displays for
-    time = 20 -- time the hack displays for
+  blocks = 2, -- time the hack displays for
+  time = 20 -- time the hack displays for
 }
 ```
 
 - The door item is the item you want to remove from the player when placing a charge.
 - The thermite settings are the settings for the thermite hack.
+- The hack item is the item you want to *check* for when hacking.
 - The var hack settings are the settings for the variable hack.
 
 ### 2. Door Configs

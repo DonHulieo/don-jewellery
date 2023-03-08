@@ -1,14 +1,28 @@
 local Translations = {
     error = {
-        fingerprints = 'You\'ve left a fingerprint on the glass',
+        fingerprints = 'You\'ve left a fingerprint..',
+        security_active = 'The security system is active..',
         minimum_police = 'Minimum of %{value} police needed',
+        vitrine_hit = 'This display case has already been hit',
         wrong_weapon = 'Your weapon is not strong enough..',
-        stores_open = 'I should after the store closes..',
-        to_much = 'You have to much in your pocket'
+        to_much = 'You\'re pockets are full..',
+        fail_therm = 'You didn\'t apply the thermite correctly..',
+        wrong_item = 'You don\'t have the right item..',
+        too_far = 'You\'re too far away..',
+        stores_open = 'I should try after the store closes..',
+        fail_hack = 'You failed to hack the security system..'
     },
-    success = {},
+    success = {
+        thermite = 'You applied the thermite correctly..',
+        store_hit_threestore = 'Fuses blown, the doors should open soon..',
+        store_hit_onestore = 'Fuses blown, the doors should open for %{value} minutes',
+        hacked_threestore = 'Hack successful, all doors should be open..',
+        hacked_onestore = 'Hack successful, security is disabled'
+    },
     info = {
-        progressbar = 'Smashing the display case',
+        smashing_progress = 'Smashing the display case',
+        hacking_attempt = 'Connecting to the security system..',
+        one_store_warning = 'Hurry! The store will close in %{value} minute'
     },
     general = {
         target_label = 'Smash the display case',

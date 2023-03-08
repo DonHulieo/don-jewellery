@@ -55,14 +55,26 @@ RegisterServerEvent('don-jewellery:server:StoreHit', function(storeIndex, bool)
   local Player = QBCore.Functions.GetPlayer(src)
   if not Player then return end
   TriggerClientEvent('don-jewellery:client:StoreHit', -1, storeIndex, bool)
-  if storeIndex == 'all' then Config.JewelleryLocation[1].hacked = bool end
-  for i = 1, #Config.JewelleryLocation do
+  if storeIndex == 'all' then Config.Stores[1].hacked = bool end
+  for i = 1, #Config.Stores do
     if storeIndex == 'all' then
-      Config.JewelleryLocation[i].hit = bool
+      Config.Stores[i].hit = bool
     else
       if i == storeIndex then
-        Config.JewelleryLocation[storeIndex].hit = bool
+        Config.Stores[storeIndex].hit = bool
       end
+    end
+  end
+end)
+
+RegisterServerEvent('don-jewellery:server:ToggleDoorlocks', function(store, locked, allStores)
+  local src = source
+  if not allStores then
+    TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[store]['Doors'].main, locked, src, false, false)
+  else
+    for i = 1, #Config.Stores do
+      TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[i]['Doors'].main, locked, src, false, false)
+      TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[i]['Doors'].sec, locked, src, false, false)
     end
   end
 end)
@@ -84,16 +96,15 @@ RegisterServerEvent('don-jewellery:server:VitrineReward', function(vitrineIndex)
     if plrPed then
       local dist = #(plrCoords - vitrineCoords)
       if dist <= 25.0 then
-        Config.Locations[vitrineIndex]['isOpened'] = true
-        Config.Locations[vitrineIndex]['isBusy'] = false
+        Config.Locations[vitrineIndex].isOpened = true
+        Config.Locations[vitrineIndex].isBusy = false
         TriggerClientEvent('don-jewellery:client:SetVitrineState', -1, 'isOpened', true, vitrineIndex)
         TriggerClientEvent('don-jewellery:client:SetVitrineState', -1, 'isBusy', false, vitrineIndex)
 
         local reward = Config.VitrineRewards[randumNum(1, #Config.VitrineRewards)]
-        local amount = randumNum(reward['amount'].min, reward['amount'].max)
-        local item = reward['item']
-        if Player.Functions.AddItem(item, amount) then
-          TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], 'add')
+        local amount = randumNum(reward['Amounts'].min, reward['Amounts'].max)
+        if Player.Functions.AddItem(reward.item, amount) then
+          TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[reward.item], 'add')
         else
           TriggerClientEvent('QBCore:Notify', src, Lang:t('error.to_much'), 'error')
         end
@@ -134,13 +145,13 @@ RegisterServerEvent('don-jewellery:server:SetTimeout', function(vitrine)
     TriggerEvent('qb-scoreboard:server:SetActivityBusy', 'jewellery', true)
     CreateThread(function()
       Wait(Config.Timeout)
-      Config.JewelleryLocation[1]['hacked'] = false
-      for i = 1, #Config.JewelleryLocation do
-        Config.JewelleryLocation[i]['hit'] = false
+      Config.Stores[1].hacked = false
+      for i = 1, #Config.Stores do
+        Config.Stores[i].hit = false
       end
       TriggerClientEvent('don-jewellery:client:StoreHit', -1, 'all', false)
       for i = 1, #Config.Locations do
-        Config.Locations[i]["isOpened"] = false
+        Config.Locations[i].isOpened = false
         TriggerClientEvent('don-jewellery:client:SetVitrineState', -1, 'isOpened', false, i)
         TriggerClientEvent('don-jewellery:client:SetAlertState', -1, false)
         TriggerEvent('qb-scoreboard:server:SetActivityBusy', 'jewellery', false)
@@ -165,6 +176,6 @@ QBCore.Functions.CreateCallback('don-jewellery:server:GetCops', function(source,
 end)
 
 QBCore.Functions.CreateCallback('don-jewellery:server:GetJewelleryState', function(_, cb)
-  local data = {Locations = Config.Locations, Hacks = Config.JewelleryLocation}
+  local data = {Locations = Config.Locations, Hacks = Config.Stores}
 	cb(data)
 end)
