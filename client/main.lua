@@ -165,6 +165,68 @@ local function getCamID(k)
   return camID
 end
 
+local function alertsCD(alertType)
+  local data = exports['cd_dispatch']:GetPlayerInfo()
+  if alertType == 'robbery' then
+    TriggerServerEvent('cd_dispatch:AddNotification', {
+      job_table = {'police', }, 
+      coords = data.coords,
+      title = '10-65 - Jewelery Store Robbery',
+      message = 'A '..data.sex..' robbing a Vangelico\'s at '..data.street, 
+      flash = 0,
+      unique_id = data.unique_id,
+      sound = 1,
+      blip = {
+        sprite = 586, 
+        scale = 1.2, 
+        colour = 3,
+        flashes = true, 
+        text = '999 - Jewelery Store Robbery',
+        time = 5,
+        radius = 0
+      }
+    })
+  elseif alertType == 'suspicous' then
+    TriggerServerEvent('cd_dispatch:AddNotification', {
+      job_table = {'police', }, 
+      coords = data.coords,
+      title = '10-67 - Suspicious Activity',
+      message = 'Someone has reported a '..data.sex.. ' at '..data.street , 
+      flash = 0,
+      unique_id = data.unique_id,
+      sound = 1,
+      blip = {
+        sprite = 586, 
+        scale = 1.2, 
+        colour = 3,
+        flashes = true, 
+        text = '999 - Suspicious Activity',
+        time = 5,
+        radius = 0
+      }
+    })
+  elseif alertType == 'explosion' then
+    TriggerServerEvent('cd_dispatch:AddNotification', {
+      job_table = {'police', }, 
+      coords = data.coords,
+      title = '10-80 - Explosion',
+      message = 'An explosion has been reported at '..data.street, 
+      flash = 0,
+      unique_id = data.unique_id,
+      sound = 1,
+      blip = {
+        sprite = 586, 
+        scale = 1.2, 
+        colour = 3,
+        flashes = true, 
+        text = '999 - Jewelery Store Robbery',
+        time = 5,
+        radius = 5
+      }
+    })
+  end
+end
+
 -------------------------------- HANDLERS --------------------------------
 
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
@@ -236,10 +298,12 @@ AddEventHandler('don-jewellery:client:SmashCase', function(case)
               TriggerServerEvent('don-jewellery:server:VitrineReward', case)
               TriggerServerEvent('don-jewellery:server:SetTimeout', case)
               if not secondAlarm and not isStoreHacked() then 
-                if not Config.PSDispatch then
+                if Config.Dispatch == 'qb' then
                   TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
-                else
+                elseif Config.Dispatch == 'ps' then
                   exports['ps-dispatch']:VangelicoRobbery(getCamID(case))
+                elseif Config.Dispatch == 'cd'
+                  alertsCD('robbery')
                 end
                 secondAlarm = true
                 firstAlarm = false
@@ -288,10 +352,12 @@ AddEventHandler('don-jewellery:client:Thermite', function(store)
   end
 
   if AlertChance <= 10 then
-    if not Config.PSDispatch then
+    if Config.Dispatch == 'qb' then
       TriggerServerEvent('police:server:policeAlert', 'Suspicious Activity')
-    else
+    elseif Config.Dispatch == 'ps' then
       exports['ps-dispatch']:SuspiciousActivity()
+    elseif Config.Dispatch == 'cd' then
+      alertsCD('suspicious')
     end
     firstAlarm = true
   end
@@ -348,10 +414,12 @@ AddEventHandler('don-jewellery:client:Thermite', function(store)
                 DeleteObject(thermal_charge)
                 TriggerEvent('don-jewellery:client:HackSuccess', store)
                 if not firstAlarm and AlertChance <= 25 then
-                  if not Config.PSDispatch then
+                  if Config.Dispatch == 'qb' then
                     TriggerServerEvent('police:server:policeAlert', 'Explosion Reported')
-                  else
+                  elseif Config.Dispatch == 'ps' then
                     exports["ps-dispatch"]:Explosion()
+                  elseif Config.Dispatch == 'cd' then
+                    alertsCD('explosion')
                   end
                   firstAlarm = true
                 end

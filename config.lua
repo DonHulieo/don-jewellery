@@ -1,11 +1,9 @@
 Config = Config or {}
 
 Config.OneStore = false -- Set to true if using just the main Vangelico's Jewellers
-Config.PSDispatch = true -- Set to false for base qb-policejob alerts or true to use ps-dispatch alerts
 Config.Cooldown = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For door auto lock function
 Config.Timeout = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For case smashing cooldown
 Config.AutoLock = true -- Set to false if you don't want the doors to auto lock/lock at all
-Config.DoorLock = 'qb' -- Set to 'qb' for qb-doorlock or 'ox' for ox_doorlock // If using ox, uncomment '@ox_lib/init.lua', from the fxmanifest.lua
 Config.RequiredCops = 3
 
 Config.VangelicoHours = { -- Store Hours
@@ -22,6 +20,22 @@ Config.VangelicoHours = { -- Store Hours
     fin = 6 -- The end of higher chance alerts in the morning // Default 6am
   }
 }
+
+Config.Dispatch = 'ps' --[[ Police Dispatch System 
+  Set to 'ps' for police-script 
+  Set to 'qb' for base qb-policejob alerts 
+  Set to 'cd' for cd_policealerts ]
+]--
+
+Config.DoorLock = 'qb' --[[ Doorlock System 
+  Set to 'qb' for qb-doorlock  
+  // Create a file named `jewellery_stores` in qb-doorlock/config/ and copy the Door Config from the README into it.
+  Set to 'ox' for ox_doorlock 
+  // Uncomment '@ox_lib/init.lua' from the fxmanifest.lua, create a file named `jewellery_stores` in ox_doorlock/config/ and copy the Door Config from the README into it.
+  Set to 'cd' for cd_doorlock
+  // Create a Group named `Jewellery Stores` through the in-game menu and add the copy the Door Config from the README into it. 
+  Ensure the names of the doors correspond to the names of the doors below. 
+]]--
 
 Config.Stores = {
   [1] = { -- City Vangelico's

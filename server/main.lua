@@ -81,6 +81,8 @@ RegisterServerEvent('don-jewellery:server:ToggleDoorlocks', function(store, lock
     elseif Config.DoorLock == 'ox' then
       local door = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[store]['Doors'].main)
       TriggerEvent('ox_doorlock:setState', door.id, locked)
+    elseif Config.DoorLock == 'cd' then
+      TriggerClientEvent('cd_doorlock:SetDoorState_name', -1, locked, Config.Stores[store]['Doors'].main, 'Jewellery Stores')
     end
   else
     for i = 1, #Config.Stores do
@@ -92,6 +94,9 @@ RegisterServerEvent('don-jewellery:server:ToggleDoorlocks', function(store, lock
         local sec = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[i]['Doors'].sec)
         TriggerEvent('ox_doorlock:setState', main.id, locked)
         TriggerEvent('ox_doorlock:setState', sec.id, locked)
+      elseif Config.DoorLock == 'cd' then
+        TriggerClientEvent('cd_doorlock:SetDoorState_name', -1, locked, Config.Stores[i]['Doors'].main, 'Jewellery Stores')
+        TriggerClientEvent('cd_doorlock:SetDoorState_name', -1, locked, Config.Stores[i]['Doors'].sec, 'Jewellery Stores')
       end
     end
   end
