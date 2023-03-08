@@ -1,11 +1,11 @@
-# don-jewelery
+# don-jewellery
 
-Jewelery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock/unlock doors!
+Jewellery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock/unlock doors!
 
 ## Credits
 
-- [Holiday95](https://github.com/Holidayy95/qb-jewelery) For their fork of qb-jewelery which this is based on, and giving me the idea.
-- [QBCore Framework](https://github.com/qbcore-framework) For the orginal qb-jewelery and for inspiring me to code.
+- [Holiday95](https://github.com/Holidayy95/qb-jewellery) For their fork of qb-jewellery which this is based on, and giving me the idea.
+- [QBCore Framework](https://github.com/qbcore-framework) For the orginal qb-jewellery and for inspiring me to code.
 - [MrNewb](https://github.com/MrNewb) For showing me how to get the cases to break, absolute legend!
 
 ## Dependencies
@@ -35,7 +35,7 @@ Jewelery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock/
 
 ## Previews
 
-- [Don Jewelery](https://youtu.be/t-MO9yvzlx4)
+- [Don Jewellery](https://youtu.be/t-MO9yvzlx4)
 - [Cases](https://streamable.com/5xcg40)
 - [Dispatch Pt 1](https://streamable.com/3lspsx)
 - [Dispatch Pt 2](https://streamable.com/c9zs9z)
@@ -122,8 +122,8 @@ Config.Stores = {
     label = 'Vangelico\'s Jewellers',
     coords = vector3(-630.5, -237.13, 38.08),
     ['Doors'] = {
-      main = 'jewelery-citymain',
-      sec = 'jewelery-citysec'
+      main = 'jewellery-citymain',
+      sec = 'jewellery-citysec'
     },
     ...
   },
@@ -131,8 +131,8 @@ Config.Stores = {
     label = 'Vangelico\'s Jewellers',
     coords = vector3(1649.78, 4882.32, 42.16),
     ['Doors'] = {
-      main = 'jewelery-grapemain',
-      sec = 'jewelery-grapesec'
+      main = 'jewellery-grapemain',
+      sec = 'jewellery-grapesec'
     },
     ...
   },
@@ -140,8 +140,8 @@ Config.Stores = {
     label = 'Vangelico\'s Jewellers',
     coords = vector3(-378.45, 6047.68, 32.69),
     ['Doors'] = {
-      main = 'jewelery-palmain',
-      sec = 'jewelery-palsec'
+      main = 'jewellery-palmain',
+      sec = 'jewellery-palsec'
     },
     ...
   }
@@ -177,7 +177,7 @@ Config.VarHackSettings = {
 - Make a copy of the door config below and place it inside `qb-doorlocks/configs/` in it's own .lua file.
 
 ```lua
-Config.DoorList['jewelery-citymain'] = {
+Config.DoorList['jewellery-citymain'] = {
     doorType = 'double',
     locked = true,
     cantUnlock = true,
@@ -190,7 +190,7 @@ Config.DoorList['jewelery-citymain'] = {
     doorRate = 1.0,
 }
 
-Config.DoorList['jewelery-citysec'] = {
+Config.DoorList['jewellery-citysec'] = {
     objYaw = 36.000022888184,
     doorRate = 1.0,
     locked = true,
@@ -204,7 +204,7 @@ Config.DoorList['jewelery-citysec'] = {
     objName = 1335309163,
 }
 
-Config.DoorList['jewelery-grapemain'] = {
+Config.DoorList['jewellery-grapemain'] = {
     doorType = 'double',
     locked = true,
     cantUnlock = true,
@@ -217,7 +217,7 @@ Config.DoorList['jewelery-grapemain'] = {
     doorRate = 1.0,
 }
 
-Config.DoorList['jewelery-grapesec'] = {
+Config.DoorList['jewellery-grapesec'] = {
     pickable = true,
     objCoords = vec3(1648.274902, 4877.423340, 42.309898),
     objName = 1335309163,
@@ -231,7 +231,7 @@ Config.DoorList['jewelery-grapesec'] = {
     locked = true,
 }
 
-Config.DoorList['jewelery-palmain'] = {
+Config.DoorList['jewellery-palmain'] = {
     doorType = 'double',
     locked = true,
     cantUnlock = true,
@@ -244,7 +244,7 @@ Config.DoorList['jewelery-palmain'] = {
     doorRate = 1.0,
 }
 
-Config.DoorList['jewelery-palsec'] = {
+Config.DoorList['jewellery-palsec'] = {
     doorType = 'door',
     locked = true,
     doorRate = 1.0,

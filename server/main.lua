@@ -25,11 +25,11 @@ local function exploitBan(id, reason)
       QBCore.Functions.GetIdentifier(id, 'ip'),
       reason,
       2147483647,
-      'qb-jewelery'
+      'don-jewellery'
     }
   )
-  TriggerEvent('qb-log:server:CreateLog', 'jewelery', 'Player Banned', 'red',
-  string.format('%s was banned by %s for %s', GetPlayerName(id), 'qb-jewelery', reason), true)
+  TriggerEvent('qb-log:server:CreateLog', 'jewellery', 'Player Banned', 'red',
+  string.format('%s was banned by %s for %s', GetPlayerName(id), 'don-jewellery', reason), true)
   DropPlayer(id, 'You were permanently banned by the server for: Exploiting')
 end
 

@@ -26,8 +26,8 @@ Config.Stores = {
     label = 'Vangelico\'s Jewellers',
     coords = vector3(-630.5, -237.13, 38.08),
     ['Doors'] = {
-      main = 'jewelery-citymain',
-      sec = 'jewelery-citysec'
+      main = 'jewellery-citymain',
+      sec = 'jewellery-citysec'
     },
     ['Thermite'] = {
       -- City Vangelico's \\ Rooftop Thermite --
@@ -53,8 +53,8 @@ Config.Stores = {
     label = 'Vangelico\'s Jewellers',
     coords = vector3(1649.78, 4882.32, 42.16),
     ['Doors'] = {
-      main = 'jewelery-grapemain',
-      sec = 'jewelery-grapesec'
+      main = 'jewellery-grapemain',
+      sec = 'jewellery-grapesec'
     },
     ['Thermite'] = {
       -- Grapeseed Vangelico's \\ Side Alley Thermite --
@@ -71,8 +71,8 @@ Config.Stores = {
     label = 'Vangelico\'s Jewellers',
     coords = vector3(-378.45, 6047.68, 32.69),
     ['Doors'] = {
-      main = 'jewelery-palmain',
-      sec = 'jewelery-palsec'
+      main = 'jewellery-palmain',
+      sec = 'jewellery-palsec'
     },
     ['Thermite'] = {
       -- Paleto Vangelico's \\ Rear Alley Thermite --
