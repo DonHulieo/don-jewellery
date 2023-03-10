@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'DonHulieo'
 description 'Jewellery Store Heist for QBCore'
-version '1.2.9'
+version '1.3.0'
 
 shared_scripts {
   -- '@ox_lib/init.lua',

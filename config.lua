@@ -21,13 +21,15 @@ Config.VangelicoHours = { -- Store Hours
   }
 }
 
-Config.Dispatch = 'ps' --[[ Police Dispatch System 
+Config.Dispatch = 'ps' -- Police Dispatch System 
+--[[ 
   Set to 'ps' for police-script 
   Set to 'qb' for base qb-policejob alerts 
-  Set to 'cd' for cd_policealerts ]
+  Set to 'cd' for cd_policealerts
 ]]--
 
-Config.DoorLock = 'qb' --[[ Doorlock System 
+Config.DoorLock = 'qb' -- Doorlock System 
+--[[
   Set to 'qb' for qb-doorlock  
   // Create a file named `jewellery_stores` in qb-doorlock/config/ and copy the Door Config from the README into it.
   Set to 'ox' for ox_doorlock 
@@ -182,7 +184,42 @@ Config.VitrineRewards = {
   }
 }
 
-Config.Locations = {
+Config.Skills = {
+  enabled = false, -- Enable Skills
+  system = 'mz-skills', 
+  ['Thermite'] = {
+    skill = 'Heist Reputation', -- Skill to Use
+    ['Limits'] = {
+      xp = 800 -- XP Required to do the Task
+    },
+    ['Rewards'] = {
+      xp = 10, -- XP to give on success
+      multi = 1.5 -- Multiplier Based on Players Level
+    }
+  },
+  ['Hack'] = {
+    skill = 'Hacking',
+    ['Limits'] = {
+      xp = 1600
+    },
+    ['Rewards'] = {
+      xp = 25,
+      multi = 2.5
+    }
+  },
+  ['Vitrine'] = {
+    skill = 'Heist Reputation',
+    ['Limits'] = {
+      xp = 0
+    },
+    ['Rewards'] = {
+      xp = 5,
+      multi = 1.25
+    }
+  }
+}
+
+Config.Vitrines = {
   [1] = {
     coords = vector3(-626.83, -235.35, 38.05),
     isOpened = false,

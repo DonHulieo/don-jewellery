@@ -17,14 +17,13 @@ local function loadAnimDict(dict)
   repeat Wait(0) until HasAnimDictLoaded(dict)
 end
 
-local function randumNum(min, max)
+local function randomNum(min, max)
   math.randomseed(GetGameTimer())
   local num = math.random() * (max - min) + min
   if num % 1 >= 0.5 and math.ceil(num) <= max then
     return math.ceil(num)
-  else
-    return math.floor(num)
   end
+  return math.floor(num)
 end
 
 local function isStoreHit(vitrine, isStore)
@@ -227,11 +226,33 @@ local function alertsCD(alertType)
   end
 end
 
+local function checkSkill(hack)
+  local retval = false
+  local skill = exports[Config.Skills.system]:GetCurrentSkill(Config.Skills[hack].skill)
+  local currXP = skill['Current']
+  local reqXP = Config.Skills[hack]['Limits'].xp
+  if currXP >= reqXP then
+    retval = true
+  end
+  return retval
+end
+
+local function addSkillToPlayer(hack)
+  local reward = Config.Skills[hack]['Rewards'].xp
+  local multi = Config.Skills[hack]['Rewards'].multi
+  local skill = exports[Config.Skills.system]:GetCurrentSkill(Config.Skills[hack].skill)
+  local currXP = skill['Current']
+  if currXP <= 0 then currXP = 1 end
+  local xp = math.floor(reward * multi * (currXP * 0.001))
+  if xp < reward then xp = reward end
+  exports[Config.Skills.system]:UpdateSkill(Config.Skills[hack].skill, xp)
+end
+
 -------------------------------- HANDLERS --------------------------------
 
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
 	QBCore.Functions.TriggerCallback('don-jewellery:server:GetJewelleryState', function(result)
-		Config.Locations = result.Locations
+		Config.Vitrines = result.Locations
     Config.Stores = result.Hacks
 	end)
   local blip = GetFirstBlipInfoId(617)
@@ -241,8 +262,8 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
 end)
 
 AddEventHandler('QBCore:Client:OnPlayerUnload', function()
-  for i = 1, #Config.Locations do
-    if Config.Locations[i].isBusy then
+  for i = 1, #Config.Vitrines do
+    if Config.Vitrines[i].isBusy then
       TriggerServerEvent('don-jewellery:server:SetVitrineState', false, i)
     end
   end
@@ -251,8 +272,8 @@ end)
 
 AddEventHandler('onResourceStart', function(resource)
   if resource ~= GetCurrentResourceName() then return end
-  for i = 1, #Config.Locations do
-    if Config.Locations[i].isBusy then
+  for i = 1, #Config.Vitrines do
+    if Config.Vitrines[i].isBusy then
       TriggerServerEvent('don-jewellery:server:SetVitrineState', false, i)
     end
   end
@@ -262,8 +283,8 @@ end)
 
 AddEventHandler('onResourceStop', function(resource)
   if resource ~= GetCurrentResourceName() then return end
-  for i = 1, #Config.Locations do
-    if Config.Locations[i].isBusy then
+  for i = 1, #Config.Vitrines do
+    if Config.Vitrines[i].isBusy then
       TriggerServerEvent('don-jewellery:server:SetVitrineState', false, i)
     end
   end
@@ -274,7 +295,13 @@ end)
 AddEventHandler('don-jewellery:client:SmashCase', function(case)
   QBCore.Functions.TriggerCallback('don-jewellery:server:GetCops', function(cops)
     if not checkTime(Config.VangelicoHours.range.open, Config.VangelicoHours.range.close) then
-      if not Config.Locations[case]['isOpened'] then
+      if not Config.Vitrines[case].isOpened then
+        if Config.Skills.enabled then
+          if not checkSkill('Vitrine') then
+            QBCore.Functions.Notify(Lang:t('error.skill_fail', {value = Config.Skills['Vitrine'].skill}), 'error')
+            return
+          end
+        end
         if cops >= Config.RequiredCops then
           if isStoreHit(case, false) or isStoreHacked() then
             local animDict = 'missheist_jewel'
@@ -282,13 +309,14 @@ AddEventHandler('don-jewellery:client:SmashCase', function(case)
             local ped = PlayerPedId()
             local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.6, 0)
             local pedWeapon = GetSelectedPedWeapon(ped)
-            if randumNum(1, 100) <= 80 and not isWearingHandshoes() then
+            if randomNum(1, 100) <= 80 and not isWearingHandshoes() then
               TriggerServerEvent('evidence:server:CreateFingerDrop', plyCoords)
-            elseif randumNum(1, 100) <= 5 and isWearingHandshoes() then
+            elseif randomNum(1, 100) <= 5 and isWearingHandshoes() then
               TriggerServerEvent('evidence:server:CreateFingerDrop', plyCoords)
               QBCore.Functions.Notify(Lang:t('error.fingerprints'), 'error')
             end
             smashing = true
+            if Config.Skills.enabled then addSkillToPlayer('Vitrine') end
             QBCore.Functions.Progressbar('smash_vitrine', Lang:t('info.smashing_progress'), Config.WhitelistedWeapons[pedWeapon].timeOut, false, true, {
               disableMovement = true,
               disableCarMovement = true,
@@ -344,9 +372,9 @@ AddEventHandler('don-jewellery:client:SmashCase', function(case)
 end)
 
 AddEventHandler('don-jewellery:client:Thermite', function(store)
-  local AlertChance = randumNum(1, 100)
+  local AlertChance = randomNum(1, 100)
   if checkTime(Config.VangelicoHours.alertmorn.start, Config.VangelicoHours.alertmorn.fin) or checkTime(Config.VangelicoHours.alertnight.start, Config.VangelicoHours.alertnight.fin) then
-    AlertChance = randumNum(1, 50)
+    AlertChance = randomNum(1, 50)
   else
     AlertChance = AlertChance
   end
@@ -364,10 +392,16 @@ AddEventHandler('don-jewellery:client:Thermite', function(store)
 
   QBCore.Functions.TriggerCallback('don-jewellery:server:GetCops', function(cops)
     if not checkTime(Config.VangelicoHours.range.open, Config.VangelicoHours.range.close) then
+      if Config.Skills.enabled then 
+        if not checkSkill('Thermite') then
+          QBCore.Functions.Notify(Lang:t('error.skill_fail', {value = Config.Skills['Thermite'].skill}), 'error')
+          return
+        end
+      end
       if cops >= Config.RequiredCops then
         local ped = PlayerPedId()
         local coords = GetEntityCoords(ped)
-        local printChance = randumNum(1, 100)
+        local printChance = randomNum(1, 100)
         local dist = #(coords - Config.Stores[store]['Thermite'].coords)
         if dist <= 1.5 then
           if QBCore.Functions.HasItem(Config.DoorItem) then
@@ -406,6 +440,7 @@ AddEventHandler('don-jewellery:client:Thermite', function(store)
                 ClearPedTasks(ped)
             
                 Wait(100)
+                if Config.Skills.enabled then addSkillToPlayer('Thermite') end
                 loadPtfx('scr_ornate_heist')
                 local termcoords = GetEntityCoords(thermal_charge)
                 local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', termcoords.x, termcoords.y + 1.0, termcoords.z, 0, 0, 0, 0x3F800000, 0, 0, 0, 0)
@@ -445,6 +480,12 @@ end)
 AddEventHandler('don-jewellery:client:HackSecurity', function()
   QBCore.Functions.TriggerCallback('don-jewellery:server:GetCops', function(cops)
     if not checkTime(Config.VangelicoHours.range.open, Config.VangelicoHours.range.close) then
+      if Config.Skills.enabled then
+        if not checkSkill('Hack') then
+          QBCore.Functions.Notify(Lang:t('error.skill_fail', {value = Config.Skills['Hack'].skill}), 'error')
+          return
+        end
+      end
       if cops >= Config.RequiredCops then
         local ped = PlayerPedId()
         local coords = GetEntityCoords(ped)
@@ -466,14 +507,15 @@ AddEventHandler('don-jewellery:client:HackSecurity', function()
                 end
               end
             end)
-            -- if randumNum(1, 100) <= 80 and not isWearingHandshoes() then
+            -- if randomNum(1, 100) <= 80 and not isWearingHandshoes() then
             --     TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
-            -- elseif randumNum(1, 100) <= 5 and isWearingHandshoes() then
+            -- elseif randomNum(1, 100) <= 5 and isWearingHandshoes() then
             --     TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
             -- end
             Wait(2500)
             exports['ps-ui']:VarHack(function(success)
               if success then
+                if Config.Skills.enabled then addSkillToPlayer('Hack') end
                 hacking = false
                 TriggerServerEvent('don-jewellery:server:StoreHit', 'all', true)
                 Wait(250)
@@ -552,13 +594,13 @@ end)
 -------------------------------- EVENTS --------------------------------
 
 RegisterNetEvent('don-jewellery:client:SetVitrineState', function(stateType, state, k)
-  Config.Locations[k][stateType] = state
+  Config.Vitrines[k][stateType] = state
   if stateType == 'isBusy' and state == true then
-    CreateModelSwap(Config.Locations[k].coords, 0.1, Config.Locations[k].propStart, Config.Locations[k].propEnd, false)
+    CreateModelSwap(Config.Vitrines[k].coords, 0.1, Config.Vitrines[k].propStart, Config.Vitrines[k].propEnd, false)
   end
 
   if stateType == 'isOpened' and state == false then
-    RemoveModelSwap(Config.Locations[k].coords, 0.1, Config.Locations[k].propStart, Config.Locations[k].propEnd, false)
+    RemoveModelSwap(Config.Vitrines[k].coords, 0.1, Config.Vitrines[k].propStart, Config.Vitrines[k].propEnd, false)
   end
 end)
 
@@ -579,7 +621,7 @@ end)
 -------------------------------- TARGET --------------------------------
 
 if not Config.OneStore then
-  for k, v in pairs(Config.Locations) do
+  for k, v in pairs(Config.Vitrines) do
     exports['qb-target']:AddBoxZone('jewelstore' .. k, v.coords, 1, 1, {
       name = 'jewelstore' .. k,
       heading = 40,
@@ -633,11 +675,11 @@ if not Config.OneStore then
   end
 else
   for i = 1, 20, 1 do
-    exports['qb-target']:AddBoxZone('jewelstore' .. i, Config.Locations[i].coords, 1, 1, {
+    exports['qb-target']:AddBoxZone('jewelstore' .. i, Config.Vitrines[i].coords, 1, 1, {
       name = 'jewelstore' .. i,
       heading = 40,
-      minZ = Config.Locations[i].coords.z - 1,
-      maxZ = Config.Locations[i].coords.z + 1,
+      minZ = Config.Vitrines[i].coords.z - 1,
+      maxZ = Config.Vitrines[i].coords.z + 1,
       debugPoly = false
     }, 
     {
@@ -657,7 +699,7 @@ else
             end
           end,
           canInteract = function()
-            if Config.Locations[i].isOpened or Config.Locations[i].isBusy then return false end
+            if Config.Vitrines[i].isOpened or Config.Vitrines[i].isBusy then return false end
             return true
           end,
         }

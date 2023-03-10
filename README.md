@@ -11,7 +11,6 @@ Jewellery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock
 ## Dependencies
 
 - [qb-core](https://github.com/qbcore-framework/qb-core)
-- [qb-doorlock](https://github.com/qbcore-framework/qb-doorlock)
 - [qb-target](https://github.com/qbcore-framework/qb-target)
 - [ps-ui](https://github.com/Project-Sloth/ps-ui)
 
@@ -19,6 +18,11 @@ Jewellery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock
 
 - [ps-dispatch](https://github.com/Project-Sloth/ps-dispatch)
 - [qb-policejob](https://github.com/qbcore-framework/qb-policejob)
+- [cd_dispatch](https://forum.cfx.re/t/paid-codesign-police-dispatch/2007097)
+- [qb-doorlock](https://github.com/qbcore-framework/qb-doorlock)
+- [ox_doorlock](https://github.com/overextended/ox_doorlock)
+- [cd_doorlock](https://forum.cfx.re/t/paid-codesign-door-lock/5005862)
+- [mz-skills](https://github.com/MrZainRP/mz-skills)
 
 ## New Features
 
@@ -114,13 +118,13 @@ Config.Dispatch = 'ps' --[[ 'ps' for ps-dispatch, 'qb' for base qb-policejob ale
 - The cooldown is the time (in minutes) the doors will auto lock after a hack.
 - The timeout is the time (in minutes) the cases will reset after smashing.
 - If `Config.AutoLock` is set to false, the doors will always be unlocked.
-- Set `Config.DoorLock` to 'qb' if using qb-doorlocks, 'ox' if using ox_doorlock. Make sure to uncomment '@ox_lib/init.lua' from the fxmanifest.lua if using ox.
 - The required cops is the amount of cops online required for the store to be "thievable".
 - Set `Config.Dispatch` to; 'ps' for ps-dispatch, 'qb' for base qb-policejob alerts, 'cd' for cd_dispatch.
 
 #### 1.3. Door Locks
 
 ```lua
+
 Config.DoorLock = 'qb' --[[ Doorlock System ]]--
 
 Config.Stores = {
@@ -185,6 +189,33 @@ Config.VarHackSettings = {
 - The thermite settings are the settings for the thermite hack.
 - The hack item is the item you want to *check* for when hacking.
 - The var hack settings are the settings for the variable hack.
+
+#### 1.6. Skills
+
+```lua
+Config.Skills = {
+  enabled = false, -- Enable Skills
+  system = 'mz-skills', 
+  ['Thermite'] = {
+    skill = 'Heist Reputation', -- Skill to Use
+    ['Limits'] = {
+      xp = 800 -- XP Required to do the Task
+    },
+    ['Rewards'] = {
+      xp = 10, -- XP to give on success
+      multi = 1.5 -- Multiplier Based on Players Level
+    }
+  },
+  ...
+}
+```
+
+- Set `Config.Skills.enabled` to true to enable skills.
+- Set `Config.Skills.system` to the name of the skills system you are using.
+- Set `Config.Skills.[Task].skill` to the name of the skill you want to use.
+- Set `Config.Skills.[Task].Limits.xp` to the amount of xp required to do the task.
+- Set `Config.Skills.[Task].Rewards.xp` to the amount of xp you want to give on success.
+- Set `Config.Skills.[Task].Rewards.multi` to the multiplier based on the players level/ current xp.
 
 ### 2. Door Configs
 

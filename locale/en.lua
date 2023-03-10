@@ -10,7 +10,8 @@ local Translations = {
         wrong_item = 'You don\'t have the right item..',
         too_far = 'You\'re too far away..',
         stores_open = 'I should try after the store closes..',
-        fail_hack = 'You failed to hack the security system..'
+        fail_hack = 'You failed to hack the security system..',
+        skill_fail = 'Your %{value} skill is not high enough..'
     },
     success = {
         thermite = 'You applied the thermite correctly..',
