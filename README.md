@@ -16,9 +16,9 @@ Jewellery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock
 
 ### *Optional Dependancies*
 
-- [ps-dispatch](https://github.com/Project-Sloth/ps-dispatch)
 - [qb-policejob](https://github.com/qbcore-framework/qb-policejob)
 - [cd_dispatch](https://forum.cfx.re/t/paid-codesign-police-dispatch/2007097)
+- [ps-dispatch](https://github.com/Project-Sloth/ps-dispatch)
 - [qb-doorlock](https://github.com/qbcore-framework/qb-doorlock)
 - [ox_doorlock](https://github.com/overextended/ox_doorlock)
 - [cd_doorlock](https://forum.cfx.re/t/paid-codesign-door-lock/5005862)
