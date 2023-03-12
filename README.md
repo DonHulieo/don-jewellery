@@ -305,6 +305,17 @@ Config.DoorList['jewellery-palsec'] = {
 }
 ```
 
+## CD Doorlock Images
+
+How your doorlocks should look on [cd_doorlock](https://forum.cfx.re/t/paid-codesign-door-lock/5005862) after implementing them!
+
+![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338161628495923/image.png)
+![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338217219797052/image.png)
+![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338278506971197/image.png)
+![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338329706840144/image.png)
+![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338362338508862/image.png)
+![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338478663348224/image.png)
+
 ## Support
 
 This is not a QBCore script nor is it maintained by them, please refer to my discord for any issues!
