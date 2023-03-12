@@ -78,6 +78,12 @@ data_file 'INTERIOR_PROXY_ORDER_FILE' 'interiorproxies.meta'
 - Don't add the new Cam ID's to qb-policejob.
 - Set Config.OneStore = true.
 
+## Setup Logs
+
+Head over to qb-smallresources/server/logs.lua and add this underneath your last log
+
+```lua ['donjewellery'] = '',```
+
 ## Important Config
 
 ### 1. Intial Setup
