@@ -78,7 +78,7 @@ RegisterServerEvent('don-jewellery:server:ToggleDoorlocks', function(store, lock
     if Config.DoorLock == 'qb' then
       TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[store]['Doors'].main, locked, src, false, false)
     elseif Config.DoorLock == 'ox' then
-      local door = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[store]['Doors'].main)
+      local door = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[store]['Doors'].main) or exports['ox_doorlock']:getDoorFromName('jewellery_stores' ..Config.Stores[store]['Doors'].main)
       TriggerEvent('ox_doorlock:setState', door.id, locked)
     elseif Config.DoorLock == 'cd' then
       TriggerClientEvent('cd_doorlock:SetDoorState_name', -1, locked, Config.Stores[store]['Doors'].main, 'Jewellery Stores')
@@ -89,8 +89,8 @@ RegisterServerEvent('don-jewellery:server:ToggleDoorlocks', function(store, lock
         TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[i]['Doors'].main, locked, src, false, false)
         TriggerClientEvent('qb-doorlock:client:setState', -1, src, Config.Stores[i]['Doors'].sec, locked, src, false, false)
       elseif Config.DoorLock == 'ox' then
-        local main = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[i]['Doors'].main)
-        local sec = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[i]['Doors'].sec)
+        local main = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[i]['Doors'].main) or exports['ox_doorlock']:getDoorFromName('jewellery_stores' ..Config.Stores[i]['Doors'].main)
+        local sec = exports['ox_doorlock']:getDoorFromName('jewellery_stores ' ..Config.Stores[i]['Doors'].sec) or exports['ox_doorlock']:getDoorFromName('jewellery_stores' ..Config.Stores[i]['Doors'].sec)
         TriggerEvent('ox_doorlock:setState', main.id, locked)
         TriggerEvent('ox_doorlock:setState', sec.id, locked)
       elseif Config.DoorLock == 'cd' then
