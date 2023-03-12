@@ -82,7 +82,9 @@ data_file 'INTERIOR_PROXY_ORDER_FILE' 'interiorproxies.meta'
 
 Head over to qb-smallresources/server/logs.lua and add this underneath your last log
 
-```lua ['donjewellery'] = '',```
+```lua 
+['donjewellery'] = '',
+```
 
 ## Important Config
 
