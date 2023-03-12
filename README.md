@@ -86,7 +86,7 @@ Head over to qb-smallresources/server/logs.lua and add this underneath your last
 ['donjewellery'] = '',
 ```
 Once you've added that go over to your logs server and create a channel, create a webhook and then place it inbetween the ''.
-If you do not know how to create a webhook follow this guide [Creating Webhooks][https://www.youtube.com/watch?v=fKksxz2Gdnc]
+If you do not know how to create a webhook follow this guide [Creating Webhooks](https://www.youtube.com/watch?v=fKksxz2Gdnc).
 
 ## Important Config
 
