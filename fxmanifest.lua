@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'DonHulieo'
 description 'Jewellery Store Heist for QBCore'
-version '1.3.0'
+version '1.3.1'
 
 shared_scripts {
   -- '@ox_lib/init.lua',
@@ -25,8 +25,7 @@ server_scripts {
 
 dependencies {
   'qb-core',
-  'qb-target', 
-  'qb-scoreboard',
+  'qb-target',
   'oxmysql', 
   'PolyZone'
 }
