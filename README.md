@@ -16,9 +16,9 @@ Jewellery Robbery for QBCore with 1 or 3 stores, Thermite, VarHack and auto-lock
 
 ### *Optional Dependancies*
 
-- [ps-dispatch](https://github.com/Project-Sloth/ps-dispatch)
 - [qb-policejob](https://github.com/qbcore-framework/qb-policejob)
 - [cd_dispatch](https://forum.cfx.re/t/paid-codesign-police-dispatch/2007097)
+- [ps-dispatch](https://github.com/Project-Sloth/ps-dispatch)
 - [qb-doorlock](https://github.com/qbcore-framework/qb-doorlock)
 - [ox_doorlock](https://github.com/overextended/ox_doorlock)
 - [cd_doorlock](https://forum.cfx.re/t/paid-codesign-door-lock/5005862)
@@ -77,6 +77,16 @@ data_file 'INTERIOR_PROXY_ORDER_FILE' 'interiorproxies.meta'
 - Don't add the door locks for Grapeseed or Paleto to the qb-doorlocks configs file.
 - Don't add the new Cam ID's to qb-policejob.
 - Set Config.OneStore = true.
+
+## Setup Logs
+
+Head over to qb-smallresources/server/logs.lua and add this underneath your last log
+
+```lua 
+['donjewellery'] = '',
+```
+Once you've added that go over to your logs server and create a channel, create a webhook and then place it inbetween the ''.
+If you do not know how to create a webhook follow this guide [Creating Webhooks](https://www.youtube.com/watch?v=fKksxz2Gdnc).
 
 ## Important Config
 
