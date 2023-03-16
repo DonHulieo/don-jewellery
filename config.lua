@@ -29,6 +29,7 @@ Config.Dispatch = 'ps' -- Police Dispatch System
 ]]--
 
 Config.DoorLock = 'qb' -- Doorlock System 
+Config.DoorLock.Extraname = 'jewellery_stores' -- Doorlock System Extra Name // For ox_doorlock of the default config provided doesn't work
 --[[
   Set to 'qb' for qb-doorlock  
   // Create a file named `jewellery_stores` in qb-doorlock/config/ and copy the Door Config from the README into it.

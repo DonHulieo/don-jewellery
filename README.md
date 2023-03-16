@@ -82,9 +82,10 @@ data_file 'INTERIOR_PROXY_ORDER_FILE' 'interiorproxies.meta'
 
 Head over to qb-smallresources/server/logs.lua and add this underneath your last log
 
-```lua 
+```lua
 ['donjewellery'] = '',
 ```
+
 Once you've added that go over to your logs server and create a channel, create a webhook and then place it inbetween the ''.
 If you do not know how to create a webhook follow this guide [Creating Webhooks](https://www.youtube.com/watch?v=fKksxz2Gdnc).
 
@@ -315,35 +316,49 @@ Config.DoorList['jewellery-palsec'] = {
 }
 ```
 
+## OX Doorlock 
+
+- If using ox_doorlock, and the door configs above cause errors in this heist, set `Config.DoorLock.Extraname` to the main name of the door in your database.
+
+- Highlighted below is an example of what name in the database you should set `Config.DoorLock.Extraname` to.
+
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; align-content: center;">
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+        <img src="https://cdn.discordapp.com/attachments/1024287310424047716/1085926698815590461/Jewellery_Stores_for_Readme.PNG.jpg" style="width: 600px; height: 400px; object-fit: cover; border-radius: 10px;">
+        <p style="margin: 0; font-size: 20px; font-weight: bold;">OX Door Configs in Database</p>
+    </div>
+</div>
+
 ## CD Doorlock Images
 
 How your doorlocks should look on [cd_doorlock](https://forum.cfx.re/t/paid-codesign-door-lock/5005862) after implementing them!
 
-## City Main Door
-
-![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338161628495923/image.png)
-
-## City Second Door
-
-![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338217219797052/image.png)
-
-## Grapeseed Main Door
-
-![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338278506971197/image.png)
-
-## Grapeseed Second Door
-
-![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338329706840144/image.png)
-
-## Paleto Main Door
-
-![image](https://cdn.discordapp.com/attachments/898673216116109324/1084341564446343168/image.png)
-
-## Paleto Second Door
-
-![image](https://cdn.discordapp.com/attachments/898673216116109324/1084341798354292837/image.png)
-
-![image](https://cdn.discordapp.com/attachments/898673216116109324/1084338478663348224/image.png)
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; align-content: center;">
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+        <img src="https://cdn.discordapp.com/attachments/898673216116109324/1084338161628495923/image.png" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+        <p style="margin: 0; font-size: 20px; font-weight: bold;">City Main Door</p>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+        <img src="https://cdn.discordapp.com/attachments/898673216116109324/1084338217219797052/image.png" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+        <p style="margin: 0; font-size: 20px; font-weight: bold;">City Second Door</p>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+        <img src="https://cdn.discordapp.com/attachments/898673216116109324/1084338278506971197/image.png" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+        <p style="margin: 0; font-size: 20px; font-weight: bold;">Grapeseed Main Door</p>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+        <img src="https://cdn.discordapp.com/attachments/898673216116109324/1084338329706840144/image.png" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+        <p style="margin: 0; font-size: 20px; font-weight: bold;">Grapeseed Second Door</p>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+        <img src="https://cdn.discordapp.com/attachments/898673216116109324/1084341564446343168/image.png" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+        <p style="margin: 0; font-size: 20px; font-weight: bold;">Paleto Main Door</p>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+        <img src="https://cdn.discordapp.com/attachments/898673216116109324/1084338478663348224/image.png" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+        <p style="margin: 0; font-size: 20px; font-weight: bold;">Paleto Second Door</p>
+    </div>
+</div>
 
 ## Support
 
