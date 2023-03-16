@@ -324,7 +324,7 @@ Config.DoorList['jewellery-palsec'] = {
 
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; align-content: center;">
     <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
-        <img src="https://cdn.discordapp.com/attachments/1024287310424047716/1085926698815590461/Jewellery_Stores_for_Readme.PNG.jpg" style="width: 600px; height: 400px; object-fit: cover; border-radius: 10px;">
+        <img src="https://cdn.discordapp.com/attachments/1024287310424047716/1085926698815590461/Jewellery_Stores_for_Readme.PNG.jpg" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
         <p style="margin: 0; font-size: 20px; font-weight: bold;">OX Door Configs in Database</p>
     </div>
 </div>
