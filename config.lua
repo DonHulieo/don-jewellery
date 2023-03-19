@@ -28,7 +28,7 @@ Config.Dispatch = 'ps' -- Police Dispatch System
   Set to 'cd' for cd_policealerts
 ]]--
 
-Config.DoorLock = 'ox' -- Doorlock System
+Config.DoorLock = 'qb' -- Doorlock System
 if Config.DoorLock == 'ox' then -- Don't touch this
   Config.DoorGroup = 'jewellery_stores' -- Doorlock System Extra Name // For ox_doorlock of the default config provided doesn't work
 end
