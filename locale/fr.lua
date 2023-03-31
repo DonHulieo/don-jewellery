@@ -1,26 +1,38 @@
 local Translations = {
     error = {
-        fingerprints = 'Tu as laissé une empreinte sur la vitre',
-        minimum_police = 'Il faut un minimum de %{value} policiers pour commencer',
-        wrong_weapon = 'Ton arme n\'est pas suffisament forte ou efficace...',
-        stores_open = 'Je devrais le faire une fois que le magasin est fermé...',
-        to_much = 'Tu as trop dans tes poches'
+        fingerprints    = 'Vous avez laissé une empreinte digitale...',
+        security_active = 'Le système de sécurité est actif..',
+        minimum_police  = 'Minimum de %{value} police nécessaire',
+        vitrine_hit     = 'Cette vitrine a déjà été touchée',
+        wrong_weapon    = 'Votre arme n\'est pas assez puissante...',
+        to_much         = 'Vos poches sont pleines..',
+        fail_therm      = 'Vous n\'avez pas appliqué la thermite correctement..',
+        wrong_item      = 'Vous n\'avez pas le bon article..',
+        too_far         = 'Tu es trop loin..',
+        stores_open     = 'Je devrais essayer après la fermeture du magasin..',
+        fail_hack       = 'Vous n\'avez pas réussi à pirater le système de sécurité.',
+        skill_fail      = 'Votre compétence %{value} n\'est pas assez élevée..'
     },
-    success = {},
+    success = {
+        thermite             = 'Vous avez appliqué la thermite correctement..',
+        store_hit_threestore = 'Fusibles grillés, les portes devraient bientôt s\'ouvrir..',
+        store_hit_onestore   = 'Fusibles grillés, les portes devraient s\'ouvrir pendant %{value} minutes',
+        hacked_threestore    = 'Hack réussi, toutes les portes doivent être ouvertes..',
+        hacked_onestore      = 'Hack réussi, la sécurité est désactivée'
+    },
     info = {
-        progressbar = 'Brisage de la vitrine d\'exposition',
+        smashing_progress = 'Briser la vitrine',
+        hacking_attempt = 'Connexion au système de sécurité..',
+        one_store_warning = 'Hâte! Le magasin fermera dans %{value} minute'
     },
     general = {
-        target_label = 'Brise la vitrine d\'exposition',
-        drawtextui_grab = '[E] Brise la vitrine',
-        drawtextui_broken = 'La vitrine est brisée'
+        target_label = 'Briser la vitrine',
+        drawtextui_grab = '[E] Casser la vitrine',
+        drawtextui_broken = 'La vitrine est cassée'
     }
 }
 
-if GetConvar('qb_locale', 'en') == 'fr' then
-    Lang = Locale:new({
-        phrases = Translations,
-        warnOnMissing = true,
-        fallbackLang = Lang,
-    })
-end
+Lang = Lang or Locale:new({
+    phrases = Translations,
+    warnOnMissing = true
+})

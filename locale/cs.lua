@@ -1,25 +1,38 @@
 local Translations = {
     error = {
-        fingerprints = 'Zanechal jsi otiskl prstu na skle',
-        minimum_police = 'Je potřeba %{value} policistů',
-        wrong_weapon = 'Tvoje zbraň není dost silná..',
-        to_much = 'Máš moc plné kapsy'
+        fingerprints = 'Zanechal jsi otisk prstu..',
+        security_active = 'Zabezpečovací systém je aktivní..',
+        minimum_police = 'Zabezpečovací systém je aktivní..',
+        vitrine_hit = 'Tato vitrína již byla zasažena',
+        wrong_weapon = 'Vaše zbraň není dostatečně silná..',
+        to_much = 'máš plné kapsy..',
+        fail_therm = 'Neaplikovali jste termit správně.',
+        wrong_item = 'Nemáte správnou položku..',
+        too_far = 'Jsi moc daleko..',
+        stores_open = 'Měl bych to zkusit po zavření obchodu..',
+        fail_hack = 'Nepodařilo se vám hacknout bezpečnostní systém.',
+        skill_fail = 'Vaše %{value} dovednost není dostatečně vysoká..'
     },
-    success = {},
+    success = {
+        thermite = 'Aplikovali jste termit správně.',
+        store_hit_threestore = 'Přepálené pojistky, dveře by se měly brzy otevřít..',
+        store_hit_onestore = 'Pojistky spálené, dveře by se měly otevřít na %{value} minut',
+        hacked_threestore = 'Hack úspěšný, všechny dveře by měly být otevřené..',
+        hacked_onestore = 'Hack byl úspěšný, zabezpečení je deaktivováno'
+    },
     info = {
-        progressbar = 'Rozbíjení vitríny',
+        smashing_progress = 'Rozbití vitríny',
+        hacking_attempt = 'Připojení k zabezpečovacímu systému..',
+        one_store_warning = 'Pospěš si! Obchod se zavře za %{value} minutu'
     },
     general = {
-        target_label = 'Rozbij vitrínu',
-        drawtextui_grab = '[E] Rozbij vitrínu',
-        drawtextui_broken = 'Vitrína je již rozbitá'
+        target_label = 'Rozbijte vitrínu',
+        drawtextui_grab = '[E] Rozbijte vitrínu',
+        drawtextui_broken = 'Vitrína je rozbitá'
     }
 }
 
-if GetConvar('qb_locale', 'en') == 'cs' then
-    Lang = Locale:new({
-        phrases = Translations,
-        warnOnMissing = true,
-        fallbackLang = Lang,
-    })
-end
+Lang = Lang or Locale:new({
+    phrases = Translations,
+    warnOnMissing = true
+})
