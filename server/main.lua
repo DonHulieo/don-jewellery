@@ -127,7 +127,7 @@ RegisterServerEvent('don-jewellery:server:VitrineReward', function(vitrineIndex)
         local amount = randomNum(reward['Amounts'].min, reward['Amounts'].max)
         if Player.Functions.AddItem(reward.item, amount) then
           TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[reward.item], 'add')
-          TriggerEvent('qb-log:server:CreateLog', 'donjewellery', 'Jewellery Robbery', 'red', ('**Name:** %s | **License:** ||(%s)||\n **Info:** Robbed a [Jewellery Case] and recieved (%s) %s '):format(GetPlayerName(src), Player.PlayerData.license, amount, reward.item))
+          TriggerEvent('qb-log:server:CreateLog', 'donjewellery', 'Jewellery Robbery', 'red', ('**Name:** %s | **License:** ||(%s)||\n **Info:** Robbed a [Jewellery Case] and received (%s) %s '):format(GetPlayerName(src), Player.PlayerData.license, amount, reward.item))
         else
           TriggerClientEvent('QBCore:Notify', src, Lang:t('error.to_much'), 'error')
         end
