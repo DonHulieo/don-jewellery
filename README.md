@@ -173,7 +173,7 @@ Config.Stores = {
 - // Create a file named `jewellery_stores` in qb-doorlock/config/ and copy the Door Config from the README into it.
 
 - Set to `ox` for ox_doorlock
-- // Uncomment '@ox_lib/init.lua' from the fxmanifest.lua, create a file named `jewellery_stores` in ox_doorlock/config/ and copy the Door Config from the README into it.
+- // Uncomment '@ox_lib/init.lua' from the fxmanifest.lua, create a file named `jewellery_stores` in ox_doorlock/convert/ and copy the Door Config from the README into it.
 
 - Set to `cd` for cd_doorlock
 - // Create a Group named `Jewellery Stores` through the in-game menu and add the copy the Door Config from the README into it.
