@@ -19,11 +19,7 @@ end
 
 local function randomNum(min, max)
   math.randomseed(GetGameTimer())
-  local num = math.random() * (max - min) + min
-  if num % 1 >= 0.5 and math.ceil(num) <= max then
-    return math.ceil(num)
-  end
-  return math.floor(num)
+  return math.floor((math.random() * (max - min) + min) + 0.5)
 end
 
 local function isStoreHit(vitrine, isStore)
@@ -162,6 +158,13 @@ local function getCamID(k)
     camID = 36
   end
   return camID
+end
+
+local function toggleCams(state)
+  local ids = {31, 32, 33, 34}
+  for k, v in pairs(ids) do
+    TriggerEvent('police:client:SetCamera', v, state)
+  end
 end
 
 local function alertsCD(alertType)
@@ -325,13 +328,18 @@ AddEventHandler('don-jewellery:client:SmashCase', function(case)
             }, {}, {}, {}, function() -- Done
               TriggerServerEvent('don-jewellery:server:VitrineReward', case)
               TriggerServerEvent('don-jewellery:server:SetTimeout', case)
-              if not secondAlarm and not isStoreHacked() then 
-                if Config.Dispatch == 'qb' then
-                  TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
-                elseif Config.Dispatch == 'ps' then
-                  exports['ps-dispatch']:VangelicoRobbery(getCamID(case))
-                elseif Config.Dispatch == 'cd' then
-                  alertsCD('robbery')
+              if not secondAlarm then 
+                if Config.HackEffect == 'disableAlarm' and not isStoreHacked() or Config.HackEffect == 'disableCam' then
+                  if Config.Dispatch == 'qb' then
+                    TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
+                  elseif Config.Dispatch == 'ps' then
+                    exports['ps-dispatch']:VangelicoRobbery(getCamID(case))
+                  elseif Config.Dispatch == 'cd' then
+                    alertsCD('robbery')
+                  end
+                end
+                if Config.HackEffect == 'disableCam' and isStoreHacked() then
+                  toggleCams(false)
                 end
                 secondAlarm = true
                 firstAlarm = false
@@ -565,6 +573,7 @@ AddEventHandler('don-jewellery:client:HackSuccess', function(store)
         Wait(Config.Cooldown - warningTimer)
         QBCore.Functions.Notify(Lang:t('info.one_store_warning', {value = math.floor(warningTime)}), 'primary')
         Wait(warningTimer)
+        if Config.HackEffect == 'disableCam' then toggleCams(true) end
       end
       if Config.AutoLock and not checkTime(Config.VangelicoHours.range.open, Config.VangelicoHours.range.close) then
         TriggerServerEvent('don-jewellery:server:ToggleDoorlocks', store, true, false)

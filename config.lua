@@ -1,10 +1,10 @@
 Config = Config or {}
 
-Config.OneStore = false -- Set to true if using just the main Vangelico's Jewellers
+Config.OneStore = true -- Set to true if using just the main Vangelico's Jewellers
 Config.Cooldown = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For door auto lock function
 Config.Timeout = 5 * (60 * 2000) -- where x is minutes ie. x * (60 * 2000) \\ For case smashing cooldown
 Config.AutoLock = true -- Set to false if you don't want the doors to auto lock/lock at all
-Config.RequiredCops = 3
+Config.RequiredCops = 0
 
 Config.VangelicoHours = { -- Store Hours
   range = { -- Set both to 0 if you want the store to be robbed 24/7
@@ -41,6 +41,10 @@ end
   // Create a Group named `Jewellery Stores` through the in-game menu and add the copy the Door Config from the README into it. 
   Ensure the names of the doors correspond to the names of the doors below. 
 ]]--
+
+if Config.OneStore then -- Don't touch this
+  Config.HackEffect = 'disableCam' -- Set to 'disableAlarm' to disable police alerts or 'disableCam' to disable cameras
+end -- Don't touch this
 
 Config.Stores = {
   [1] = { -- City Vangelico's
