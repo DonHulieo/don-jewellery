@@ -246,7 +246,10 @@ local function addSkillToPlayer(hack)
   local skill = exports[Config.Skills.system]:GetCurrentSkill(Config.Skills[hack].skill)
   local currXP = skill['Current']
   if currXP <= 0 then currXP = 1 end
-  local xp = math.floor(reward * multi * (currXP * 0.001))
+  -- To change the amount of dynamic xp gained, change the 0.001 to a number between 0.1 and 0.000001
+  -- The closer to 0 the number is, the more xp you will get
+  -- For ease of use, just use 0.001, 0.0001, 0.00001, 0.000001 etc.
+  local xp = math.floor(reward * multi * (currXP * 0.00001))
   if xp < reward then xp = reward end
   exports[Config.Skills.system]:UpdateSkill(Config.Skills[hack].skill, xp)
 end
