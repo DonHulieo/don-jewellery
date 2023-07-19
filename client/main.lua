@@ -401,6 +401,11 @@ AddEventHandler('don-jewellery:client:Thermite', function(store)
     firstAlarm = true
   end
 
+  if isStoreHit(store, true) then
+    QBCore.Functions.Notify(Lang:t('error.store_hit'), 'error')
+    return 
+  end
+  
   QBCore.Functions.TriggerCallback('don-jewellery:server:GetCops', function(cops)
     if not checkTime(Config.VangelicoHours.range.open, Config.VangelicoHours.range.close) then
       if Config.Skills.enabled then 
