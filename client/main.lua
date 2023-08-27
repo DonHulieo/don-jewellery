@@ -786,6 +786,7 @@ CreateThread(function()
           Wait(1000)
           TriggerServerEvent('don-jewellery:server:ToggleDoorlocks', nil, false, true)
           loopDone = true
+          locked = false
         end
       end
     end
